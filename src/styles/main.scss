@@ -1,2 +1,10 @@
+//abstracts
+
 @import "./abstracts/mixins";
 @import "./abstracts/variables";
+
+//layout
+
+@import "./layout/index";
+@import "./layout/footer";
+@import "./layout/header";
