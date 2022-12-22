@@ -11,3 +11,8 @@ export interface IProduct {
     thumbnail: string;
     images: string[];
 }
+
+export interface IProductCard {
+    product: IProduct;
+    renderCard(): void;
+}
