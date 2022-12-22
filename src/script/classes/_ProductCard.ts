@@ -15,6 +15,7 @@ export class ProductCard {
     }
 
     renderCard() {
+        this.container.style.backgroundImage = `url("${this.product.thumbnail}")`;
         const productName: HTMLElement = document.createElement("div");
         productName.textContent = this.product.title;
         const category: HTMLElement = document.createElement("div");
@@ -29,7 +30,13 @@ export class ProductCard {
         rating.textContent = `${this.product.rating}`;
         const stock: HTMLElement = document.createElement("div");
         stock.textContent = `${this.product.stock}`;
-        [productName, category, brand, price, discount, rating, stock].forEach((e) => {
+        const addButton: HTMLElement = document.createElement("div");
+        addButton.className = "add-to-cart";
+        addButton.textContent = "Add to Cart";
+        const infoButton: HTMLElement = document.createElement("div");
+        infoButton.className = "infoButton";
+        infoButton.textContent = "Details";
+        [productName, category, brand, price, discount, rating, stock, addButton, infoButton].forEach((e) => {
             this.container.appendChild(e);
         });
     }
