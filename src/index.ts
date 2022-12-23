@@ -1,7 +1,7 @@
 import "./styles/main.scss";
 
 import { Loader } from "./script/classes/_Loader";
-import { ProductList } from "./script/classes/_ProductList";
+import { ProductMain } from "./script/classes/_ProductMain";
 
 export const loader = new Loader();
-const list = new ProductList();
+export const list = new ProductMain();

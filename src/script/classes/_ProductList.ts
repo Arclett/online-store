@@ -1,19 +1,17 @@
-import { isElement } from "../types/_typeguards";
-import { loader } from "../..";
 import { IProduct, IProductCard } from "../types/_interfaces";
 import { ProductCard } from "./_ProductCard";
 
 export class ProductList {
-    currentList: IProductCard[] = [];
+    currentList: IProduct[];
     container: HTMLElement;
+    currentProducts: ProductCard[] = [];
 
-    constructor() {
-        this.renderList();
-        const container: HTMLElement | null = document.querySelector(".product-list");
-        if (isElement(container)) {
-            this.container = container;
-            this.container.addEventListener("click", this.clickHandler.bind(this));
-        }
+    constructor(data: IProduct[], container: HTMLElement) {
+        this.currentList = data;
+        this.container = container;
+        this.renderList(this.currentList);
+
+        this.container.addEventListener("click", this.clickHandler.bind(this));
     }
 
     clickHandler(e: Event): void {
@@ -26,15 +24,13 @@ export class ProductList {
         }
     }
 
-    async renderList() {
-        const data: { products: IProduct[] } = await loader.load();
-        console.log(data);
-        data.products.forEach((e) => {
+    renderList(data: IProduct[]) {
+        data.forEach((e) => {
             const product: HTMLElement = document.createElement("div");
             product.className = "product";
             product.dataset.id = `${e.id}`;
             this.container.appendChild(product);
-            this.currentList.push(new ProductCard(e, product));
+            this.currentProducts.push(new ProductCard(e, product));
         });
     }
 }

@@ -1,5 +1,6 @@
 import { IProduct } from "../types/_interfaces";
 import { isElement } from "../types/_typeguards";
+import { list } from "../..";
 
 export class ProductCard {
     product: IProduct;
@@ -15,7 +16,6 @@ export class ProductCard {
     }
 
     renderCard() {
-        this.container.style.backgroundImage = `url("${this.product.thumbnail}")`;
         const productName: HTMLElement = document.createElement("div");
         productName.textContent = this.product.title;
         const category: HTMLElement = document.createElement("div");
@@ -36,6 +36,12 @@ export class ProductCard {
         const infoButton: HTMLElement = document.createElement("div");
         infoButton.className = "infoButton";
         infoButton.textContent = "Details";
+        if (list) {
+            const img = list.getImage(this.product.id);
+            if (img) {
+                this.container.appendChild(img);
+            }
+        }
         [productName, category, brand, price, discount, rating, stock, addButton, infoButton].forEach((e) => {
             this.container.appendChild(e);
         });
