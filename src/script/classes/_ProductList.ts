@@ -1,5 +1,6 @@
 import { IProduct, IProductCard } from "../types/_interfaces";
 import { ProductCard } from "./_ProductCard";
+import { router } from "../..";
 
 export class ProductList {
     currentList: IProduct[];
@@ -17,7 +18,10 @@ export class ProductList {
     clickHandler(e: Event): void {
         if (!(e.target instanceof HTMLElement)) return;
         if (e.target.classList.contains("product") || e.target.classList.contains("infoButton")) {
-            console.log("Going to Details --->");
+            if (router) {
+                router.route(`/product-details/1`);
+                router.locHandling();
+            }
         }
         if (e.target.classList.contains("add-to-cart")) {
             console.log("Add to cart +++");
