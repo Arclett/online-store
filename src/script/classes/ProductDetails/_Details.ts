@@ -1,5 +1,6 @@
 export class Details {
     container: HTMLElement;
+
     constructor(container: HTMLElement) {
         this.container = container;
     }

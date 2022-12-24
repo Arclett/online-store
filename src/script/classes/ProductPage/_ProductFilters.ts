@@ -1,9 +1,11 @@
-import { IProduct } from "../types/_interfaces";
-import { filterType } from "../types/_enums";
+import { IProduct } from "../../types/_interfaces";
+import { FilterType } from "../../types/_enums";
 
 export class ProductFilters {
     data: IProduct[];
+
     container: HTMLElement;
+
     constructor(data: IProduct[], container: HTMLElement) {
         this.data = data;
         this.container = container;
@@ -11,11 +13,11 @@ export class ProductFilters {
     }
 
     renderFilters(data: IProduct[]) {
-        this.renderCategory(data, filterType.category);
-        this.renderCategory(data, filterType.brand);
+        this.renderCategory(data, FilterType.category);
+        this.renderCategory(data, FilterType.brand);
     }
 
-    renderCategory(data: IProduct[], type: filterType) {
+    renderCategory(data: IProduct[], type: FilterType) {
         const categoryList = document.createElement("div");
         categoryList.className = `${type}-list`;
         this.container.appendChild(categoryList);

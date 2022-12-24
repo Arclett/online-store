@@ -1,22 +1,28 @@
-import { IProduct } from "../types/_interfaces";
-import { loader, router } from "../..";
-import { isElement } from "../types/_typeguards";
+import { IProduct } from "../../types/_interfaces";
+import { loader } from "../../..";
 import { ProductList } from "./_ProductList";
 import { ProductFilters } from "./_ProductFilters";
 
 export class ProductMain {
     data: { products: IProduct[] } = { products: [] };
+
     listContainer: HTMLElement;
+
     filtersContainer: HTMLElement;
+
     thumbnails: HTMLImageElement[] = [];
+
     productList: ProductList;
+
     productFilters: ProductFilters;
+
     mainContainer: HTMLElement;
+
     constructor(container: HTMLElement) {
         this.mainContainer = container;
     }
 
-    async init() {
+    async render() {
         await this.renderProductPage();
         console.log("create");
         this.productFilters = new ProductFilters(this.data.products, this.filtersContainer);

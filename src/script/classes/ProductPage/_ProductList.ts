@@ -1,10 +1,12 @@
-import { IProduct, IProductCard } from "../types/_interfaces";
+import { IProduct } from "../../types/_interfaces";
 import { ProductCard } from "./_ProductCard";
-import { router } from "../..";
+import { router } from "../../..";
 
 export class ProductList {
     currentList: IProduct[];
+
     container: HTMLElement;
+
     currentProducts: ProductCard[] = [];
 
     constructor(data: IProduct[], container: HTMLElement) {
@@ -19,7 +21,7 @@ export class ProductList {
         if (!(e.target instanceof HTMLElement)) return;
         if (e.target.classList.contains("product") || e.target.classList.contains("infoButton")) {
             if (router) {
-                router.route(`/product-details/1`);
+                router.route(`/product-details/${e.target.dataset.id}`);
                 router.locHandling();
             }
         }

@@ -1,7 +1,6 @@
 import "./styles/main.scss";
 
 import { Loader } from "./script/classes/_Loader";
-import { ProductMain } from "./script/classes/_ProductMain";
 import { Router } from "./script/classes/_Router";
 import { Main } from "./script/classes/_Main";
 
