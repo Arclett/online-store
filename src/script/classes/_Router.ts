@@ -12,10 +12,10 @@ export class Router {
 
     locHandling() {
         if (!main) return;
-        const path = window.location.pathname.split("/");
+        const path = window.location.href.split("/");
         console.log(path);
-        if (path[path.length - 1] === "") {
-            main.porductMain.render();
+        if (path[path.length - 1] === "" || path[path.length - 1][0] === "?") {
+            main.porductMain.render(path[path.length - 1]);
         }
         if (path[path.length - 2] === "product-details") {
             main.details.render();

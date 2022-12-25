@@ -1,6 +1,6 @@
-import { IProduct } from "../../types/_interfaces";
-import { isElement } from "../../types/_typeguards";
-import { main } from "../../..";
+import { IProduct } from "../../../types/_interfaces";
+import { isElement } from "../../../types/_typeguards";
+import { main } from "../../../..";
 
 export class ProductCard {
     product: IProduct;
@@ -37,7 +37,6 @@ export class ProductCard {
         infoButton.className = "infoButton";
         infoButton.textContent = "Details";
         infoButton.dataset.id = `${this.product.id}`;
-
         if (main.porductMain) {
             const img = main.porductMain.getImage(this.product.id);
             if (img) {

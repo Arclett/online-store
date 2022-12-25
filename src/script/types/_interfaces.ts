@@ -10,9 +10,17 @@ export interface IProduct {
     category: string;
     thumbnail: string;
     images: string[];
+    [key: string]: string | number | string[];
 }
 
 export interface IProductCard {
     product: IProduct;
     renderCard(): void;
+}
+
+export interface IFilters {
+    category: string[];
+    brand: string[];
+    price: string[];
+    stock: string[];
 }
