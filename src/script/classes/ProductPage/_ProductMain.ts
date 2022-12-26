@@ -64,16 +64,14 @@ export class ProductMain {
         if (type === "category") {
             console.log(e.target);
             const id = e.target.id;
-            if (this.productFilters.filters[type].includes(e.target.id)) {
-                this.productFilters.filters[type] = this.productFilters.filters[type].filter((elem) => elem !== id);
+            if (this.productFilters.filters[type]?.includes(e.target.id)) {
+                this.productFilters.filters[type] = this.productFilters.filters[type]?.filter((elem) => elem !== id);
             } else {
-                this.productFilters.filters[type].push(e.target.id);
+                this.productFilters.filters[type]?.push(e.target.id);
             }
-            console.log(this.productFilters.filters);
         }
         this.productList.updateList();
         const url: string = this.productFilters.makeUrl();
-        console.log(url);
         router.route(url);
     }
 }

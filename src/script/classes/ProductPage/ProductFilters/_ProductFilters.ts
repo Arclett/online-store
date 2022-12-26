@@ -51,28 +51,29 @@ export class ProductFilters {
             price: this.splitFilters(price),
             stock: this.splitFilters(stock),
         };
+        console.log(this.filters);
     }
 
     splitFilters(str: string | undefined) {
         if (str) return str.split("=")[1].split("%E2%86%95");
-        return [""];
+        return [];
     }
 
     makeUrl(): string {
         console.log("url making!");
         const filter = this.filters;
         if (
-            filter.brand.length === 1 &&
-            filter.category.length === 1 &&
-            filter.price.length === 1 &&
-            filter.stock.length === 1
+            filter.brand.length === 0 &&
+            filter.category.length === 0 &&
+            filter.price.length === 0 &&
+            filter.stock.length === 0
         ) {
             console.log("returning!");
             return "";
         }
         let url: string = "/?";
-        if (filter.category.length > 1) url += `category=${filter.category.join("↕")}&`;
-        if (filter.brand.length > 1) url += `brand=${filter.brand.join("↕")}&`;
+        if (filter.category.length > 0) url += `category=${filter.category.join("↕")}&`;
+        if (filter.brand.length > 0) url += `brand=${filter.brand.join("↕")}&`;
         console.log(url);
         if (url[url.length - 1] === "&") return url.slice(0, url.length - 2);
 

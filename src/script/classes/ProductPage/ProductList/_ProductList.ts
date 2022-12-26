@@ -33,18 +33,19 @@ export class ProductList {
 
     filterData() {
         const filter = main.porductMain.productFilters.filters;
+        console.log(filter);
+        this.currentList = this.data;
         if (
-            filter.brand.length === 1 &&
-            filter.category.length === 1 &&
-            filter.price.length === 1 &&
-            filter.stock.length === 1
+            filter.brand.length === 0 &&
+            filter.category.length === 0 &&
+            filter.price.length === 0 &&
+            filter.stock.length === 0
         ) {
-            this.currentList = this.data;
             return;
         }
-
+        console.log(Object.entries(filter));
         Object.entries(filter).forEach((e: string[]) => {
-            if (e[1][0] !== "") {
+            if (e[1].length > 0) {
                 this.currentList = this.currentList.filter((elem) => {
                     if (e[1].includes(`${elem[e[0]]}`)) {
                         return true;
@@ -52,6 +53,8 @@ export class ProductList {
                 });
             }
         });
+        console.log("filtered");
+        console.log(this.currentList);
     }
 
     renderList(data: IProduct[]) {
