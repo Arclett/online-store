@@ -24,7 +24,6 @@ export class ProductMain {
 
     async render(option: string) {
         await this.renderProductPage();
-        console.log("create");
         this.productFilters = new ProductFilters(this.data.products, this.filtersContainer, option);
         this.productList = new ProductList(this.data.products, this.listContainer);
     }
@@ -61,8 +60,7 @@ export class ProductMain {
     update(e: Event) {
         if (!(e.target instanceof HTMLElement)) return;
         const type: string = e.target.className;
-        if (type === "category") {
-            console.log(e.target);
+        if (type === "category" || type === "brand") {
             const id = e.target.id;
             if (this.productFilters.filters[type]?.includes(e.target.id)) {
                 this.productFilters.filters[type] = this.productFilters.filters[type]?.filter((elem) => elem !== id);
@@ -70,8 +68,10 @@ export class ProductMain {
                 this.productFilters.filters[type]?.push(e.target.id);
             }
         }
+        console.log(this.productFilters.filters);
         this.productList.updateList();
         const url: string = this.productFilters.makeUrl();
+        console.log(url);
         router.route(url);
     }
 }

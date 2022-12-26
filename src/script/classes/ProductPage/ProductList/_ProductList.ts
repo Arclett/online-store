@@ -33,7 +33,6 @@ export class ProductList {
 
     filterData() {
         const filter = main.porductMain.productFilters.filters;
-        console.log(filter);
         this.currentList = this.data;
         if (
             filter.brand.length === 0 &&
@@ -43,7 +42,6 @@ export class ProductList {
         ) {
             return;
         }
-        console.log(Object.entries(filter));
         Object.entries(filter).forEach((e: string[]) => {
             if (e[1].length > 0) {
                 this.currentList = this.currentList.filter((elem) => {
@@ -53,8 +51,6 @@ export class ProductList {
                 });
             }
         });
-        console.log("filtered");
-        console.log(this.currentList);
     }
 
     renderList(data: IProduct[]) {

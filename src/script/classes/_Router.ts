@@ -13,7 +13,6 @@ export class Router {
     locHandling() {
         if (!main) return;
         const path = window.location.href.split("/");
-        console.log(path);
         if (path[path.length - 1] === "" || path[path.length - 1][0] === "?") {
             main.porductMain.render(path[path.length - 1]);
         }

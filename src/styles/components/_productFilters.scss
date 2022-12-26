@@ -1,5 +1,12 @@
 .filters {
     display: flex;
-    width: 15%;
+    width: 19%;
     flex-direction: column;
+    gap: 30px;
+    .check-filter {
+        height: 30vh;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 25px;
+    }
 }

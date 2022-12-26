@@ -12,9 +12,8 @@ export class ProductFilters {
     constructor(data: IProduct[], container: HTMLElement, option: string) {
         this.data = data;
         this.container = container;
-        this.renderFilters(this.data);
         this.assignFilters(option);
-        console.log(this.filters);
+        this.renderFilters(this.data);
     }
 
     renderFilters(data: IProduct[]) {
@@ -23,14 +22,19 @@ export class ProductFilters {
     }
 
     renderFilter(data: IProduct[], type: FilterType) {
+        console.log(type);
+        console.log(this.filters);
         const categoryList = document.createElement("div");
-        categoryList.className = `${type}-list`;
+        categoryList.className = `${type}-list check-filter`;
         this.container.appendChild(categoryList);
         new Set(data.map((e) => e[type])).forEach((e) => {
             const category = document.createElement("div");
             const categoryInput = document.createElement("input");
             categoryInput.className = type;
             categoryInput.type = "checkbox";
+            if (this.filters[type]?.includes(e)) {
+                categoryInput.checked = true;
+            }
             categoryInput.id = e;
             categoryInput.name = e;
             category.appendChild(categoryInput);
@@ -51,7 +55,6 @@ export class ProductFilters {
             price: this.splitFilters(price),
             stock: this.splitFilters(stock),
         };
-        console.log(this.filters);
     }
 
     splitFilters(str: string | undefined) {
@@ -60,7 +63,6 @@ export class ProductFilters {
     }
 
     makeUrl(): string {
-        console.log("url making!");
         const filter = this.filters;
         if (
             filter.brand.length === 0 &&
@@ -68,14 +70,12 @@ export class ProductFilters {
             filter.price.length === 0 &&
             filter.stock.length === 0
         ) {
-            console.log("returning!");
-            return "";
+            return "/";
         }
         let url: string = "/?";
         if (filter.category.length > 0) url += `category=${filter.category.join("↕")}&`;
         if (filter.brand.length > 0) url += `brand=${filter.brand.join("↕")}&`;
-        console.log(url);
-        if (url[url.length - 1] === "&") return url.slice(0, url.length - 2);
+        if (url[url.length - 1] === "&") return url.slice(0, url.length - 1);
 
         return url;
     }
