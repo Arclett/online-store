@@ -41,40 +41,27 @@ export class ProductList {
     filterData() {
         const filter = main.porductMain.productFilters.filters;
         this.currentList = this.data;
-        this.filterCheck(filter);
-        this.filterRange(filter, RangeFilters.price);
-        this.filterRange(filter, RangeFilters.stock);
-    }
-
-    filterCheck(filter: IFilters) {
-        if (filter.brand.length === 0 && filter.category.length === 0) {
-            return;
-        }
-        Object.entries(filter).forEach((e: string[]) => {
-            if (e[1].length > 0) {
-                this.currentList = this.currentList.filter((elem) => {
-                    if (e[1].includes(`${elem[e[0]]}`)) {
-                        return true;
-                    }
-                });
-            }
-        });
-    }
-
-    filterRange(filter: IFilters, type: RangeFilters) {
-        if (filter[type].length === 0) return;
         if (
-            filter[type][0] === main.porductMain.productList[`${type}Range`][0] &&
-            filter[type][1] === main.porductMain.productList[`${type}Range`][1]
+            filter.brand.length === 0 &&
+            filter.category.length === 0 &&
+            filter.price.length === 0 &&
+            filter.stock.length === 0
         ) {
             return;
         }
         this.currentList = this.currentList.filter((e) => {
-            if (e.price > Number(filter[type][0]) && e.price < Number(filter[type][1])) {
-                return true;
-            }
+            let category: boolean, brand: boolean, price: boolean, stock: boolean;
+            if (filter.category.length > 0) category = filter.category.includes(e.category);
+            else category = true;
+            if (filter.brand.length > 0) brand = filter.brand.includes(e.brand);
+            else brand = true;
+            if (filter.price.length > 0) price = e.price > Number(filter.price[0]) && e.price < Number(filter.price[1]);
+            else price = true;
+            if (filter.stock.length > 0) stock = e.stock > Number(filter.stock[0]) && e.stock < Number(filter.stock[1]);
+            else stock = true;
+
+            if (category && brand && price && stock) return true;
         });
-        console.log(this.currentList);
     }
 
     renderList(data: IProduct[]) {

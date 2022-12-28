@@ -9,7 +9,6 @@ export class CheckFilter {
         this.filters = filters;
     }
     renderFilter(data: IProduct[], type: FilterType) {
-        console.log("render check");
         const categoryList = document.createElement("div");
         categoryList.className = `${type}-list check-filter`;
         this.container.appendChild(categoryList);

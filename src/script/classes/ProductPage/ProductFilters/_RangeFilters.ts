@@ -11,7 +11,6 @@ export class RangeFilter {
         this.filters = filters;
     }
     renderRange(data: IProduct[], type: RangeFilters) {
-        console.log("render range");
         const [dataMin, dataMax] = this.getRangeValue(type, data);
         const rangeContainer = document.createElement("div");
         rangeContainer.className = "range-container";
