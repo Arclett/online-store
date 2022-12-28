@@ -1,6 +1,7 @@
-import { IProduct } from "../../../types/_interfaces";
+import { IFilters, IProduct } from "../../../types/_interfaces";
 import { ProductCard } from "./_ProductCard";
 import { router, main } from "../../../..";
+import { RangeFilters } from "../../../types/_enums";
 
 export class ProductList {
     data: IProduct[];
@@ -9,9 +10,15 @@ export class ProductList {
 
     container: HTMLElement;
 
+    priceRange: string[];
+
+    stockRange: string[];
+
     constructor(data: IProduct[], container: HTMLElement) {
         this.data = data;
         this.container = container;
+        this.priceRange = main.porductMain.productFilters.rangeFilters.getRangeValue(RangeFilters.price, this.data);
+        this.stockRange = main.porductMain.productFilters.rangeFilters.getRangeValue(RangeFilters.stock, this.data);
         this.filterData();
         this.renderList(this.currentList);
 
@@ -34,12 +41,13 @@ export class ProductList {
     filterData() {
         const filter = main.porductMain.productFilters.filters;
         this.currentList = this.data;
-        if (
-            filter.brand.length === 0 &&
-            filter.category.length === 0 &&
-            filter.price.length === 0 &&
-            filter.stock.length === 0
-        ) {
+        this.filterCheck(filter);
+        this.filterRange(filter, RangeFilters.price);
+        this.filterRange(filter, RangeFilters.stock);
+    }
+
+    filterCheck(filter: IFilters) {
+        if (filter.brand.length === 0 && filter.category.length === 0) {
             return;
         }
         Object.entries(filter).forEach((e: string[]) => {
@@ -51,6 +59,22 @@ export class ProductList {
                 });
             }
         });
+    }
+
+    filterRange(filter: IFilters, type: RangeFilters) {
+        if (filter[type].length === 0) return;
+        if (
+            filter[type][0] === main.porductMain.productList[`${type}Range`][0] &&
+            filter[type][1] === main.porductMain.productList[`${type}Range`][1]
+        ) {
+            return;
+        }
+        this.currentList = this.currentList.filter((e) => {
+            if (e.price > Number(filter[type][0]) && e.price < Number(filter[type][1])) {
+                return true;
+            }
+        });
+        console.log(this.currentList);
     }
 
     renderList(data: IProduct[]) {

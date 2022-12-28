@@ -58,8 +58,9 @@ export class ProductMain {
     }
 
     update(e: Event) {
-        if (!(e.target instanceof HTMLElement)) return;
-        const type: string = e.target.className;
+        if (!(e.target instanceof HTMLInputElement)) return;
+        const type: string = e.target.className.split(" ")[0];
+
         if (type === "category" || type === "brand") {
             const id = e.target.id;
             if (this.productFilters.filters[type]?.includes(e.target.id)) {
@@ -68,10 +69,33 @@ export class ProductMain {
                 this.productFilters.filters[type]?.push(e.target.id);
             }
         }
-        console.log(this.productFilters.filters);
+
+        if (type === "price") {
+            if (this.productFilters.filters.price.length === 0) {
+                this.productFilters.filters.price = [e.target.min, e.target.max];
+            }
+            if (e.target.className.split(" ")[1] === "low-range") {
+                this.productFilters.filters.price[0] = e.target.value;
+            }
+            if (e.target.className.split(" ")[1] === "max-range") {
+                this.productFilters.filters.price[1] = e.target.value;
+            }
+        }
+        if (type === "stock") {
+            if (this.productFilters.filters.stock.length === 0) {
+                this.productFilters.filters.stock = [e.target.min, e.target.max];
+            }
+            if (e.target.className.split(" ")[1] === "low-range") {
+                this.productFilters.filters.stock[0] = e.target.value;
+            }
+            if (e.target.className.split(" ")[1] === "max-range") {
+                this.productFilters.filters.stock[1] = e.target.value;
+            }
+        }
+
         this.productList.updateList();
         const url: string = this.productFilters.makeUrl();
-        console.log(url);
+
         router.route(url);
     }
 }

@@ -1,6 +1,8 @@
-import { IProduct } from "../../../types/_interfaces";
-import { FilterType } from "../../../types/_enums";
-import { IFilters } from "../../../types/_interfaces";
+import { IProduct, IFilters } from "../../../types/_interfaces";
+import { FilterType, RangeFilters } from "../../../types/_enums";
+import { CheckFilter } from "./_CheckFilters";
+import { RangeFilter } from "./_RangeFilters";
+import { main } from "../../../..";
 
 export class ProductFilters {
     data: IProduct[];
@@ -9,42 +11,24 @@ export class ProductFilters {
 
     filters: IFilters;
 
+    checkFilters: CheckFilter;
+
+    rangeFilters: RangeFilter;
+
     constructor(data: IProduct[], container: HTMLElement, option: string) {
         this.data = data;
         this.container = container;
         this.assignFilters(option);
+        this.checkFilters = new CheckFilter(this.container, this.filters);
+        this.rangeFilters = new RangeFilter(this.container, this.filters);
         this.renderFilters(this.data);
     }
 
     renderFilters(data: IProduct[]) {
-        this.renderFilter(data, FilterType.category);
-        this.renderFilter(data, FilterType.brand);
-    }
-
-    renderFilter(data: IProduct[], type: FilterType) {
-        console.log(type);
-        console.log(this.filters);
-        const categoryList = document.createElement("div");
-        categoryList.className = `${type}-list check-filter`;
-        this.container.appendChild(categoryList);
-        new Set(data.map((e) => e[type])).forEach((e) => {
-            const category = document.createElement("div");
-            const categoryInput = document.createElement("input");
-            categoryInput.className = type;
-            categoryInput.type = "checkbox";
-            if (this.filters[type]?.includes(e)) {
-                categoryInput.checked = true;
-            }
-            categoryInput.id = e;
-            categoryInput.name = e;
-            category.appendChild(categoryInput);
-            const categoryLabel = document.createElement("label");
-            categoryLabel.className = type;
-            categoryLabel.htmlFor = e;
-            categoryLabel.textContent = e;
-            category.appendChild(categoryLabel);
-            categoryList.appendChild(category);
-        });
+        this.checkFilters.renderFilter(data, FilterType.category);
+        this.checkFilters.renderFilter(data, FilterType.brand);
+        this.rangeFilters.renderRange(data, RangeFilters.price);
+        this.rangeFilters.renderRange(data, RangeFilters.stock);
     }
 
     assignFilters(data: string) {
@@ -72,9 +56,36 @@ export class ProductFilters {
         ) {
             return "/";
         }
+        if (
+            filter.price[0] === main.porductMain.productList.priceRange[0] &&
+            filter.price[1] === main.porductMain.productList.priceRange[1] &&
+            filter.stock[0] === main.porductMain.productList.stockRange[0] &&
+            filter.stock[1] === main.porductMain.productList.stockRange[1]
+        ) {
+            return "/";
+        }
+
         let url: string = "/?";
         if (filter.category.length > 0) url += `category=${filter.category.join("↕")}&`;
         if (filter.brand.length > 0) url += `brand=${filter.brand.join("↕")}&`;
+        if (
+            !(
+                filter.price[0] === main.porductMain.productList.priceRange[0] &&
+                filter.price[1] === main.porductMain.productList.priceRange[1]
+            ) &&
+            filter.price.length > 0
+        ) {
+            url += `price=${filter.price[0]}↕${filter.price[1]}&`;
+        }
+        if (
+            !(
+                filter.stock[0] === main.porductMain.productList.stockRange[0] &&
+                filter.stock[1] === main.porductMain.productList.stockRange[1]
+            ) &&
+            filter.stock.length > 0
+        ) {
+            url += `stock=${filter.stock[0]}↕${filter.stock[1]}&`;
+        }
         if (url[url.length - 1] === "&") return url.slice(0, url.length - 1);
 
         return url;
