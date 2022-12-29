@@ -1,0 +1,10 @@
+.list-settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .view-wrapper {
+        display: flex;
+        width: 18%;
+        justify-content: space-between;
+    }
+}

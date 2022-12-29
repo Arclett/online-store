@@ -23,6 +23,7 @@ export class Main {
         if (isElement(body)) {
             body.addEventListener("click", this.clickHandler);
             body.addEventListener("input", this.inputHandler.bind(this));
+            body.addEventListener("change", this.changeHandler.bind(this));
         }
     }
 
@@ -38,5 +39,9 @@ export class Main {
 
     inputHandler(e: Event) {
         this.porductMain.update(e);
+    }
+
+    changeHandler(e: Event) {
+        this.porductMain.sort(e);
     }
 }

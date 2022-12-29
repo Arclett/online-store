@@ -2,6 +2,7 @@ import { IProduct } from "../../types/_interfaces";
 import { loader, router } from "../../..";
 import { ProductList } from "./ProductList/_ProductList";
 import { ProductFilters } from "./ProductFilters/_ProductFilters";
+import { ProductListSettings } from "./ProductList/_ProductListSettings";
 
 export class ProductMain {
     data: { products: IProduct[] } = { products: [] };
@@ -10,11 +11,15 @@ export class ProductMain {
 
     filtersContainer: HTMLElement;
 
+    settingsContainer: HTMLElement;
+
     thumbnails: HTMLImageElement[] = [];
 
     productList: ProductList;
 
     productFilters: ProductFilters;
+
+    productSettings: ProductListSettings;
 
     mainContainer: HTMLElement;
 
@@ -26,6 +31,7 @@ export class ProductMain {
         await this.renderProductPage();
         this.productFilters = new ProductFilters(this.data.products, this.filtersContainer, option);
         this.productList = new ProductList(this.data.products, this.listContainer);
+        this.productSettings = new ProductListSettings(this.settingsContainer);
     }
 
     async renderProductPage() {
@@ -39,7 +45,10 @@ export class ProductMain {
         this.listContainer.className = "product-list";
         this.filtersContainer = document.createElement("aside");
         this.filtersContainer.className = "filters";
+        this.settingsContainer = document.createElement("div");
+        this.settingsContainer.className = "list-settings";
         this.mainContainer.appendChild(this.filtersContainer);
+        this.mainContainer.appendChild(this.settingsContainer);
         this.mainContainer.appendChild(this.listContainer);
     }
 
@@ -96,6 +105,15 @@ export class ProductMain {
         this.productList.updateList();
         const url: string = this.productFilters.makeUrl();
 
+        router.route(url);
+    }
+
+    sort(e: Event) {
+        if (!(e.target instanceof HTMLSelectElement)) return;
+        this.productFilters.filters.sort = ["sort", e.target.value];
+        console.log(this.productFilters.filters);
+        this.productList.updateList();
+        const url: string = this.productFilters.makeUrl();
         router.route(url);
     }
 }

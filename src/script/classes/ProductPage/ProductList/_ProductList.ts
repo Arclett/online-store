@@ -64,6 +64,28 @@ export class ProductList {
         });
     }
 
+    sortData() {
+        const filter = main.porductMain.productFilters.filters;
+        if (filter.sort.length === 0) return;
+        const [type, order] = filter.sort[1].split("-");
+        if (type === "price") {
+            if (order === "ASC") {
+                this.currentList = this.currentList.sort((a, b) => a.price - b.price);
+            }
+            if (order === "DESC") {
+                this.currentList = this.currentList.sort((a, b) => b.price - a.price);
+            }
+        }
+        if (type === "rating") {
+            if (order === "ASC") {
+                this.currentList = this.currentList.sort((a, b) => a.rating - b.rating);
+            }
+            if (order === "DESC") {
+                this.currentList = this.currentList.sort((a, b) => b.rating - a.rating);
+            }
+        }
+    }
+
     renderList(data: IProduct[]) {
         this.container.replaceChildren();
         data.forEach((e) => {
@@ -77,6 +99,7 @@ export class ProductList {
 
     updateList() {
         this.filterData();
+        this.sortData();
         this.renderList(this.currentList);
     }
 }

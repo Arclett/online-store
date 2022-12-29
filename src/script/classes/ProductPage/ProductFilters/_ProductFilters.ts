@@ -32,12 +32,13 @@ export class ProductFilters {
     }
 
     assignFilters(data: string) {
-        let [category, brand, price, stock] = data.replace("?", "").split("&");
+        let [category, brand, price, stock, sort] = data.replace("?", "").split("&");
         this.filters = {
             category: this.splitFilters(category),
             brand: this.splitFilters(brand),
             price: this.splitFilters(price),
             stock: this.splitFilters(stock),
+            sort: this.splitFilters(sort),
         };
     }
 
@@ -52,7 +53,8 @@ export class ProductFilters {
             filter.brand.length === 0 &&
             filter.category.length === 0 &&
             filter.price.length === 0 &&
-            filter.stock.length === 0
+            filter.stock.length === 0 &&
+            filter.sort.length === 0
         ) {
             return "/";
         }
@@ -86,6 +88,7 @@ export class ProductFilters {
         ) {
             url += `stock=${filter.stock[0]}↕${filter.stock[1]}&`;
         }
+        if (filter.sort.length > 0) console.log(filter.sort);
         if (url[url.length - 1] === "&") return url.slice(0, url.length - 1);
 
         return url;

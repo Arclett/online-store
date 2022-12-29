@@ -1,6 +1,7 @@
 .filters {
+    grid-row: span 2;
     display: flex;
-    width: 19%;
+    width: 100%;
     flex-direction: column;
     gap: 30px;
     .check-filter {
