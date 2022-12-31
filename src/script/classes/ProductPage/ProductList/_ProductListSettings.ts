@@ -3,6 +3,7 @@ export class ProductListSettings {
 
     constructor(container: HTMLElement) {
         this.container = container;
+
         this.render();
     }
 
@@ -50,6 +51,7 @@ export class ProductListSettings {
         searchInput.type = "text";
         searchInput.placeholder = "search item";
         searchInput.id = "search-count";
+        searchInput.className = "search";
         searchWrapper.appendChild(searchCount);
         searchWrapper.appendChild(searchInput);
         this.container.appendChild(searchWrapper);
@@ -59,11 +61,12 @@ export class ProductListSettings {
         const viewWrapper = document.createElement("div");
         viewWrapper.className = "view-wrapper";
         const thumbnails = document.createElement("div");
-        thumbnails.className = "thumbnais";
-        thumbnails.textContent = "thumbnais";
+        thumbnails.className = "thumb";
+        thumbnails.textContent = "thumb";
         const list = document.createElement("div");
         list.className = "list";
         list.textContent = "list";
+
         viewWrapper.appendChild(thumbnails);
         viewWrapper.appendChild(list);
         this.container.appendChild(viewWrapper);

@@ -32,19 +32,26 @@ export class ProductFilters {
     }
 
     assignFilters(data: string) {
-        let [category, brand, price, stock, sort] = data.replace("?", "").split("&");
+        const arr = data.replace("?", "").split("&");
+
         this.filters = {
-            category: this.splitFilters(category),
-            brand: this.splitFilters(brand),
-            price: this.splitFilters(price),
-            stock: this.splitFilters(stock),
-            sort: this.splitFilters(sort),
+            category: this.splitFilters("category", arr),
+            brand: this.splitFilters("brand", arr),
+            price: this.splitFilters("price", arr),
+            stock: this.splitFilters("stock", arr),
+            sort: this.splitFilters("sort", arr),
+            search: this.splitFilters("search", arr),
         };
     }
 
-    splitFilters(str: string | undefined) {
-        if (str) return str.split("=")[1].split("%E2%86%95");
-        return [];
+    splitFilters(str: string, arr: string[]) {
+        let res: string[] = [];
+        arr.forEach((e) => {
+            if (e.includes(str)) {
+                res = e.split("=")[1].split("%E2%86%95");
+            }
+        });
+        return res;
     }
 
     makeUrl(): string {
@@ -54,7 +61,9 @@ export class ProductFilters {
             filter.category.length === 0 &&
             filter.price.length === 0 &&
             filter.stock.length === 0 &&
-            filter.sort.length === 0
+            filter.sort.length === 0 &&
+            filter.search.length === 0 &&
+            !main.porductMain.view
         ) {
             return "/";
         }
@@ -88,7 +97,9 @@ export class ProductFilters {
         ) {
             url += `stock=${filter.stock[0]}↕${filter.stock[1]}&`;
         }
-        if (filter.sort.length > 0) console.log(filter.sort);
+        if (filter.sort.length > 0) url += `sort=${filter.sort[1]}&`;
+        if (filter.search.length > 0) url += `search=${filter.search[1]}&`;
+        if (main.porductMain.view) url += `view=${main.porductMain.view}&`;
         if (url[url.length - 1] === "&") return url.slice(0, url.length - 1);
 
         return url;

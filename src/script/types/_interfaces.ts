@@ -24,4 +24,5 @@ export interface IFilters {
     price: string[];
     stock: string[];
     sort: string[];
+    search: string[];
 }

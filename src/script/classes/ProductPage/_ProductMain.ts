@@ -1,5 +1,5 @@
 import { IProduct } from "../../types/_interfaces";
-import { loader, router } from "../../..";
+import { loader, main, router } from "../../..";
 import { ProductList } from "./ProductList/_ProductList";
 import { ProductFilters } from "./ProductFilters/_ProductFilters";
 import { ProductListSettings } from "./ProductList/_ProductListSettings";
@@ -23,15 +23,54 @@ export class ProductMain {
 
     mainContainer: HTMLElement;
 
+    view: string | undefined;
+
     constructor(container: HTMLElement) {
         this.mainContainer = container;
+        console.log(this.mainContainer);
+        this.mainContainer.addEventListener("click", this.viewChange.bind(this));
     }
 
-    async render(option: string) {
+    setView(data: string) {
+        const view = data;
+        const viewInactive = view === "list" ? "thumb" : "list";
+        this.listContainer.classList.add(`product-${view}`);
+        this.listContainer.classList.remove(`product-${viewInactive}`);
+        const cards: NodeListOf<Element> = document.querySelectorAll(".product");
+        if (cards.length > 0) {
+            cards.forEach((e) => {
+                e.classList.add(`view-${view}`);
+                e.classList.remove(`view-${viewInactive}`);
+            });
+        }
+    }
+
+    viewChange(e: Event) {
+        if (!(e.target instanceof HTMLElement)) return;
+        if (e.target.classList.contains("list")) {
+            this.view = "list";
+            this.setView(this.view);
+        }
+        if (e.target.classList.contains("thumb")) {
+            this.view = "thumb";
+            this.setView(this.view);
+        }
+        const link: string = this.productFilters.makeUrl();
+        console.log(link);
+        router.route(link);
+    }
+
+    async render(option: string, data: string | undefined) {
+        let view = data;
+        if (!view) {
+            view = "thumb";
+        }
+
         await this.renderProductPage();
         this.productFilters = new ProductFilters(this.data.products, this.filtersContainer, option);
         this.productList = new ProductList(this.data.products, this.listContainer);
         this.productSettings = new ProductListSettings(this.settingsContainer);
+        this.setView(view);
     }
 
     async renderProductPage() {
@@ -42,7 +81,7 @@ export class ProductMain {
         }
         this.mainContainer.replaceChildren();
         this.listContainer = document.createElement("section");
-        this.listContainer.className = "product-list";
+        this.listContainer.className = `product-${this.view}`;
         this.filtersContainer = document.createElement("aside");
         this.filtersContainer.className = "filters";
         this.settingsContainer = document.createElement("div");
@@ -101,6 +140,14 @@ export class ProductMain {
                 this.productFilters.filters.stock[1] = e.target.value;
             }
         }
+        if (type === "search") {
+            const value = e.target.value;
+            if (value === "") {
+                this.productFilters.filters.search = [];
+            } else {
+                this.productFilters.filters.search = ["search", value];
+            }
+        }
 
         this.productList.updateList();
         const url: string = this.productFilters.makeUrl();
@@ -111,7 +158,6 @@ export class ProductMain {
     sort(e: Event) {
         if (!(e.target instanceof HTMLSelectElement)) return;
         this.productFilters.filters.sort = ["sort", e.target.value];
-        console.log(this.productFilters.filters);
         this.productList.updateList();
         const url: string = this.productFilters.makeUrl();
         router.route(url);

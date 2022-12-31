@@ -45,12 +45,13 @@ export class ProductList {
             filter.brand.length === 0 &&
             filter.category.length === 0 &&
             filter.price.length === 0 &&
-            filter.stock.length === 0
+            filter.stock.length === 0 &&
+            filter.search.length === 0
         ) {
             return;
         }
         this.currentList = this.currentList.filter((e) => {
-            let category: boolean, brand: boolean, price: boolean, stock: boolean;
+            let category: boolean, brand: boolean, price: boolean, stock: boolean, search: boolean;
             if (filter.category.length > 0) category = filter.category.includes(e.category);
             else category = true;
             if (filter.brand.length > 0) brand = filter.brand.includes(e.brand);
@@ -59,9 +60,18 @@ export class ProductList {
             else price = true;
             if (filter.stock.length > 0) stock = e.stock > Number(filter.stock[0]) && e.stock < Number(filter.stock[1]);
             else stock = true;
-
-            if (category && brand && price && stock) return true;
+            if (filter.search.length > 0) search = this.search(filter.search[1], e);
+            else search = true;
+            if (category && brand && price && stock && search) return true;
         });
+    }
+
+    search(str: string, elem: IProduct) {
+        let res = false;
+        Object.values(elem).forEach((e) => {
+            if (e.toString().toLowerCase().includes(str.toLowerCase())) res = true;
+        });
+        return res;
     }
 
     sortData() {
@@ -90,7 +100,7 @@ export class ProductList {
         this.container.replaceChildren();
         data.forEach((e) => {
             const product: HTMLElement = document.createElement("div");
-            product.className = "product";
+            product.className = `product view-thumb`;
             product.dataset.id = `${e.id}`;
             this.container.appendChild(product);
             new ProductCard(e, product);
@@ -101,5 +111,11 @@ export class ProductList {
         this.filterData();
         this.sortData();
         this.renderList(this.currentList);
+        const data = main.porductMain.view;
+        if (data) {
+            main.porductMain.setView(data);
+        } else {
+            main.porductMain.setView("thumb");
+        }
     }
 }

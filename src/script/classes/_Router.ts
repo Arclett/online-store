@@ -14,7 +14,21 @@ export class Router {
         if (!main) return;
         const path = window.location.href.split("/");
         if (path[path.length - 1] === "" || path[path.length - 1][0] === "?") {
-            main.porductMain.render(path[path.length - 1]);
+            let tail = path[path.length - 1];
+            let view: string | undefined;
+            if (tail === "?view=list" || tail === "?view=thumb") {
+                view = tail.split("=")[1];
+                tail = "";
+            }
+            if (tail.includes("view=list")) {
+                tail = tail.replace("&view=list", "");
+                view = "list";
+            }
+            if (tail.includes("view=thumb")) {
+                tail = tail.replace("&view=thumb", "");
+                view = "thumb";
+            }
+            main.porductMain.render(tail, view);
         }
         if (path[path.length - 2] === "product-details") {
             main.details.render();
