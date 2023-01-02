@@ -21,6 +21,7 @@ export class ProductFilters {
         this.assignFilters(option);
         this.checkFilters = new CheckFilter(this.container, this.filters);
         this.rangeFilters = new RangeFilter(this.container, this.filters);
+
         this.renderFilters(this.data);
     }
 
@@ -29,10 +30,12 @@ export class ProductFilters {
         this.checkFilters.renderFilter(data, FilterType.brand);
         this.rangeFilters.renderRange(data, RangeFilters.price);
         this.rangeFilters.renderRange(data, RangeFilters.stock);
+        this.rangeFilters.updateRangeLabel();
     }
 
     assignFilters(data: string) {
         const arr = data.replace("?", "").split("&");
+        console.log(arr);
 
         this.filters = {
             category: this.splitFilters("category", arr),
@@ -42,6 +45,7 @@ export class ProductFilters {
             sort: this.splitFilters("sort", arr),
             search: this.splitFilters("search", arr),
         };
+        console.log(this.filters);
     }
 
     splitFilters(str: string, arr: string[]) {
@@ -98,7 +102,7 @@ export class ProductFilters {
             url += `stock=${filter.stock[0]}↕${filter.stock[1]}&`;
         }
         if (filter.sort.length > 0) url += `sort=${filter.sort[1]}&`;
-        if (filter.search.length > 0) url += `search=${filter.search[1]}&`;
+        if (filter.search.length > 0) url += `search=${filter.search[0]}&`;
         if (main.porductMain.view) url += `view=${main.porductMain.view}&`;
         if (url[url.length - 1] === "&") return url.slice(0, url.length - 1);
 

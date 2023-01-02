@@ -21,8 +21,14 @@
         pointer-events: none;
         width: 80%;
     }
-    .low-range {
+    .range-min {
         position: relative;
         top: 8px;
     }
+}
+
+.range-label-wrapper {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
 }

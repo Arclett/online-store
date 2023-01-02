@@ -28,6 +28,7 @@ export class Router {
                 tail = tail.replace("&view=thumb", "");
                 view = "thumb";
             }
+            console.log(tail);
             main.porductMain.render(tail, view);
         }
         if (path[path.length - 2] === "product-details") {
