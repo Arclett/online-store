@@ -22,17 +22,26 @@ export class Main {
         const body: HTMLElement | null = document.querySelector(".body-wrapper");
         if (isElement(body)) {
             body.addEventListener("click", this.clickHandler);
+            body.addEventListener("input", this.inputHandler.bind(this));
+            body.addEventListener("change", this.changeHandler.bind(this));
         }
     }
 
     clickHandler(e: Event) {
         if (!(e.target instanceof HTMLElement)) return;
-        console.log(e.target);
         if (e.target.classList.contains("cart-logo")) {
             if (router) {
                 router.route("/cart");
                 router.locHandling();
             }
         }
+    }
+
+    inputHandler(e: Event) {
+        this.porductMain.update(e);
+    }
+
+    changeHandler(e: Event) {
+        this.porductMain.sort(e);
     }
 }

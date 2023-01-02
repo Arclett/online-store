@@ -1,34 +1,30 @@
-import { IProduct } from "../../types/_interfaces";
-import { FilterType } from "../../types/_enums";
+import { IProduct, IFilters } from "../../../types/_interfaces";
+import { FilterType } from "../../../types/_enums";
 
-export class ProductFilters {
-    data: IProduct[];
-
+export class CheckFilter {
     container: HTMLElement;
-
-    constructor(data: IProduct[], container: HTMLElement) {
-        this.data = data;
+    filters: IFilters;
+    constructor(container: HTMLElement, filters: IFilters) {
         this.container = container;
-        this.renderFilters(this.data);
+        this.filters = filters;
     }
-
-    renderFilters(data: IProduct[]) {
-        this.renderCategory(data, FilterType.category);
-        this.renderCategory(data, FilterType.brand);
-    }
-
-    renderCategory(data: IProduct[], type: FilterType) {
+    renderFilter(data: IProduct[], type: FilterType) {
         const categoryList = document.createElement("div");
-        categoryList.className = `${type}-list`;
+        categoryList.className = `${type}-list check-filter`;
         this.container.appendChild(categoryList);
         new Set(data.map((e) => e[type])).forEach((e) => {
             const category = document.createElement("div");
             const categoryInput = document.createElement("input");
+            categoryInput.className = type;
             categoryInput.type = "checkbox";
+            if (this.filters[type]?.includes(e)) {
+                categoryInput.checked = true;
+            }
             categoryInput.id = e;
             categoryInput.name = e;
             category.appendChild(categoryInput);
             const categoryLabel = document.createElement("label");
+            categoryLabel.className = type;
             categoryLabel.htmlFor = e;
             categoryLabel.textContent = e;
             category.appendChild(categoryLabel);

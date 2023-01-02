@@ -1,3 +1,5 @@
-@mixin bg {
-    background-color: beige;
+@mixin toCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
