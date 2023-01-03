@@ -27,8 +27,31 @@ export class ProductMain {
 
     constructor(container: HTMLElement) {
         this.mainContainer = container;
-        console.log(this.mainContainer);
-        this.mainContainer.addEventListener("click", this.viewChange.bind(this));
+        this.mainContainer.addEventListener("click", this.clickHandler.bind(this));
+    }
+
+    clickHandler(e: Event) {
+        if (!(e.target instanceof HTMLElement)) return;
+        if (e.target.classList.contains("list")) {
+            this.view = "list";
+            this.setView(this.view);
+            const link: string = this.productFilters.makeUrl();
+            router.route(link);
+        }
+        if (e.target.classList.contains("thumb")) {
+            this.view = "thumb";
+            this.setView(this.view);
+            const link: string = this.productFilters.makeUrl();
+            router.route(link);
+        }
+        if (e.target.classList.contains("copy")) {
+            const link: string = window.location.href;
+            navigator.clipboard.writeText(link);
+        }
+        if (e.target.classList.contains("reset")) {
+            router.route("/");
+            router.locHandling();
+        }
     }
 
     setView(data: string) {
@@ -45,21 +68,6 @@ export class ProductMain {
         }
     }
 
-    viewChange(e: Event) {
-        if (!(e.target instanceof HTMLElement)) return;
-        if (e.target.classList.contains("list")) {
-            this.view = "list";
-            this.setView(this.view);
-        }
-        if (e.target.classList.contains("thumb")) {
-            this.view = "thumb";
-            this.setView(this.view);
-        }
-        const link: string = this.productFilters.makeUrl();
-        console.log(link);
-        router.route(link);
-    }
-
     async render(option: string, data: string | undefined) {
         let view = data;
         if (!view) {
@@ -70,6 +78,8 @@ export class ProductMain {
         this.productFilters = new ProductFilters(this.data.products, this.filtersContainer, option);
         this.productList = new ProductList(this.data.products, this.listContainer);
         this.productSettings = new ProductListSettings(this.settingsContainer);
+        this.productSettings.updateSearchCount(main.porductMain.productList.currentList.length);
+        this.productSettings.updateSearchInput(this.productFilters.filters.search[0]);
         this.setView(view);
     }
 
@@ -95,6 +105,7 @@ export class ProductMain {
         data.forEach((e) => {
             const img = new Image();
             img.src = e.thumbnail;
+            img.loading = "lazy";
             img.className = "thumbnail";
             img.dataset.id = `${e.id}`;
             this.thumbnails.push(img);
@@ -122,10 +133,10 @@ export class ProductMain {
             if (this.productFilters.filters.price.length === 0) {
                 this.productFilters.filters.price = [e.target.min, e.target.max];
             }
-            if (e.target.className.split(" ")[1] === "low-range") {
+            if (e.target.className.split(" ")[1] === "range-min") {
                 this.productFilters.filters.price[0] = e.target.value;
             }
-            if (e.target.className.split(" ")[1] === "max-range") {
+            if (e.target.className.split(" ")[1] === "range-max") {
                 this.productFilters.filters.price[1] = e.target.value;
             }
         }
@@ -133,10 +144,10 @@ export class ProductMain {
             if (this.productFilters.filters.stock.length === 0) {
                 this.productFilters.filters.stock = [e.target.min, e.target.max];
             }
-            if (e.target.className.split(" ")[1] === "low-range") {
+            if (e.target.className.split(" ")[1] === "range-min") {
                 this.productFilters.filters.stock[0] = e.target.value;
             }
-            if (e.target.className.split(" ")[1] === "max-range") {
+            if (e.target.className.split(" ")[1] === "range-max") {
                 this.productFilters.filters.stock[1] = e.target.value;
             }
         }
@@ -145,7 +156,7 @@ export class ProductMain {
             if (value === "") {
                 this.productFilters.filters.search = [];
             } else {
-                this.productFilters.filters.search = ["search", value];
+                this.productFilters.filters.search = [value];
             }
         }
 

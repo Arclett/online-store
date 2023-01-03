@@ -1,5 +1,11 @@
+import { main } from "../../../..";
+
 export class ProductListSettings {
     container: HTMLElement;
+
+    searchCount: HTMLLabelElement;
+
+    searchInput: HTMLInputElement;
 
     constructor(container: HTMLElement) {
         this.container = container;
@@ -11,6 +17,8 @@ export class ProductListSettings {
         this.renderSort();
         this.renderSearch();
         this.renderView();
+        this.renderCopyFilter();
+        this.renderResetFilter();
     }
 
     renderSort() {
@@ -43,17 +51,17 @@ export class ProductListSettings {
     renderSearch() {
         const searchWrapper = document.createElement("div");
         searchWrapper.className = "search-wrapper";
-        const searchCount = document.createElement("label");
-        searchCount.textContent = "Found: 99";
-        searchCount.className = "search-count";
-        searchCount.htmlFor = "search-input";
-        const searchInput = document.createElement("input");
-        searchInput.type = "text";
-        searchInput.placeholder = "search item";
-        searchInput.id = "search-count";
-        searchInput.className = "search";
-        searchWrapper.appendChild(searchCount);
-        searchWrapper.appendChild(searchInput);
+        this.searchCount = document.createElement("label");
+        // this.searchCount.textContent = `Found: 99`;
+        this.searchCount.className = "search-count";
+        this.searchCount.htmlFor = "search-input";
+        this.searchInput = document.createElement("input");
+        this.searchInput.type = "text";
+        this.searchInput.placeholder = "search item";
+        this.searchInput.id = "search-count";
+        this.searchInput.className = "search";
+        searchWrapper.appendChild(this.searchCount);
+        searchWrapper.appendChild(this.searchInput);
         this.container.appendChild(searchWrapper);
     }
 
@@ -70,5 +78,27 @@ export class ProductListSettings {
         viewWrapper.appendChild(thumbnails);
         viewWrapper.appendChild(list);
         this.container.appendChild(viewWrapper);
+    }
+
+    renderResetFilter() {
+        const reset = document.createElement("div");
+        reset.className = "reset";
+        reset.textContent = "Reset Filters";
+        this.container.appendChild(reset);
+    }
+
+    renderCopyFilter() {
+        const copy = document.createElement("div");
+        copy.className = "copy";
+        copy.textContent = "Copy Link";
+        this.container.appendChild(copy);
+    }
+
+    updateSearchCount(num: number) {
+        this.searchCount.textContent = `Found: ${num}`;
+    }
+
+    updateSearchInput(str: string) {
+        this.searchInput.value = str;
     }
 }

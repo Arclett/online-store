@@ -41,6 +41,7 @@ export class ProductList {
     filterData() {
         const filter = main.porductMain.productFilters.filters;
         this.currentList = this.data;
+        console.log(filter.search);
         if (
             filter.brand.length === 0 &&
             filter.category.length === 0 &&
@@ -60,7 +61,7 @@ export class ProductList {
             else price = true;
             if (filter.stock.length > 0) stock = e.stock > Number(filter.stock[0]) && e.stock < Number(filter.stock[1]);
             else stock = true;
-            if (filter.search.length > 0) search = this.search(filter.search[1], e);
+            if (filter.search.length > 0) search = this.search(filter.search[0], e);
             else search = true;
             if (category && brand && price && stock && search) return true;
         });
@@ -111,6 +112,8 @@ export class ProductList {
         this.filterData();
         this.sortData();
         this.renderList(this.currentList);
+        main.porductMain.productSettings.updateSearchCount(this.currentList.length);
+        main.porductMain.productFilters.rangeFilters.updateRangeLabel();
         const data = main.porductMain.view;
         if (data) {
             main.porductMain.setView(data);
