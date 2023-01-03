@@ -1,4 +1,4 @@
-import { IFilters, IProduct } from "../../../types/_interfaces";
+import { IProduct } from "../../../types/_interfaces";
 import { ProductCard } from "./_ProductCard";
 import { router, main } from "../../../..";
 import { RangeFilters } from "../../../types/_enums";
@@ -34,7 +34,7 @@ export class ProductList {
             }
         }
         if (e.target.classList.contains("add-to-cart")) {
-            console.log("Add to cart +++");
+            this.changeCart(e.target);
         }
     }
 
@@ -120,5 +120,47 @@ export class ProductList {
         } else {
             main.porductMain.setView("thumb");
         }
+    }
+
+    changeCart(elem: HTMLElement) {
+        const prod: HTMLElement | null = elem.closest(".product");
+        const prodId: string | undefined = prod?.dataset.id;
+        if (!prodId) return;
+        const productAdd: IProduct | undefined = this.data.find((e) => e.id === Number(prodId));
+        if (!productAdd) return;
+        if (elem.classList.contains("added")) {
+            this.removeFromCart(productAdd, elem);
+        } else {
+            this.addToCart(productAdd, elem);
+        }
+    }
+
+    removeFromCart(prod: IProduct, elem: HTMLElement) {
+        main.porductMain.productCart.currentCart = main.porductMain.productCart.currentCart.filter((e) => e !== prod);
+        main.porductMain.productCart.updateCart();
+        elem.classList.remove("added");
+        elem.textContent = "Add to cart";
+    }
+
+    addToCart(prod: IProduct, elem: HTMLElement) {
+        main.porductMain.productCart.currentCart.push(prod);
+        main.porductMain.productCart.updateCart();
+        elem.classList.add("added");
+        elem.textContent = "Drop from cart";
+    }
+
+    updateListCartStatus() {
+        const list: NodeListOf<HTMLElement> = document.querySelectorAll(".product");
+        const cartId = main.porductMain.productCart.currentCart.map((e) => e.id);
+        list.forEach((e) => {
+            const id = e.dataset.id;
+            if (!id) return;
+            if (cartId.includes(Number(id))) {
+                const add: HTMLElement | null = e.querySelector(".add-to-cart");
+                if (!add) return;
+                add.textContent = "Drop from cart";
+                add.classList.add("added");
+            }
+        });
     }
 }
