@@ -9,6 +9,7 @@
 @import "./layout/footer";
 @import "./layout/header";
 @import "./layout/productPage";
+@import "./layout/cartPage";
 
 //components
 
@@ -17,3 +18,6 @@
 @import "./components/productCard";
 @import "./components/rangeFilter";
 @import "./components/productSettings";
+@import "./components/cartListSettings";
+@import "./components/cartList";
+@import "./components/cartProductCard";

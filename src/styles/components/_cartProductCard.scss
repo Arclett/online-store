@@ -1,0 +1,9 @@
+.cart-product {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 70% 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    .cart-thumb {
+        grid-row: span 3;
+    }
+}

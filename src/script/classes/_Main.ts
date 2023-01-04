@@ -14,8 +14,10 @@ export class Main {
     container: HTMLElement | null;
 
     constructor() {
-        this.container = document.querySelector(".main");
-        if (!isElement(this.container)) return;
+        const mainElement: HTMLElement | null = document.querySelector(".main");
+        if (!isElement(mainElement)) return;
+        this.container = document.createElement("div");
+        mainElement.appendChild(this.container);
         this.porductMain = new ProductMain(this.container);
         this.details = new Details(this.container);
         this.cart = new CartMain(this.container);

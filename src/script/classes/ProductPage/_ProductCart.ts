@@ -40,7 +40,6 @@ export class ProductCart {
     }
 
     updateCart() {
-        console.log(this.currentCart);
         if (this.currentCart.length === 0) {
             this.cartPrice.textContent = "Cart total: € 0.00";
             this.cartStatus.textContent = "Cart is empty";
@@ -50,5 +49,6 @@ export class ProductCart {
             if (this.currentCart.length === 1) this.cartStatus.textContent = "In Cart: 1 product";
             else this.cartStatus.textContent = `In Cart: ${this.currentCart.length} products`;
         }
+        this.saveCart();
     }
 }

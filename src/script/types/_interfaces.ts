@@ -26,3 +26,8 @@ export interface IFilters {
     sort: string[];
     search: string[];
 }
+
+export interface ICartParams {
+    page: number;
+    limit: number;
+}

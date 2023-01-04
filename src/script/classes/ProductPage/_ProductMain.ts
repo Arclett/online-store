@@ -76,7 +76,7 @@ export class ProductMain {
         if (!view) {
             view = "thumb";
         }
-
+        this.mainContainer.className = "main-product";
         await this.renderProductPage();
         this.productFilters = new ProductFilters(this.data.products, this.filtersContainer, option);
         this.productList = new ProductList(this.data.products, this.listContainer);
@@ -123,6 +123,7 @@ export class ProductMain {
 
     update(e: Event) {
         if (!(e.target instanceof HTMLInputElement)) return;
+        if (e.target.classList.contains("num-input")) return;
         const type: string = e.target.className.split(" ")[0];
 
         if (type === "category" || type === "brand") {
