@@ -13,8 +13,10 @@ export class Router {
     locHandling() {
         if (!main) return;
         let path = window.location.href.split("/");
+        console.log(path);
         if (path[path.length - 1].includes("cart")) {
             let tail = path[path.length - 1].replace("?", "");
+            console.log(tail);
             this.route(tail);
             main.cart.render(tail);
             return;
@@ -37,7 +39,7 @@ export class Router {
             main.porductMain.render(tail, view);
         }
         if (path[path.length - 2] === "product-details") {
-            main.details.render();
+            main.details.render(path);
         }
         // if (path[path.length - 1] === "cart") {
         //     main.cart.render();

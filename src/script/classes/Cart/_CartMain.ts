@@ -4,6 +4,7 @@ import { ICartParams, IProduct } from "../../types/_interfaces";
 import { ProductCart } from "../ProductPage/_ProductCart";
 import { CartList } from "./_CartList";
 import { CartPagination } from "./_CartPagination";
+import { CartSum } from "./_CartSum";
 
 export class CartMain {
     container: HTMLElement;
@@ -15,6 +16,8 @@ export class CartMain {
     productCart: ProductCart;
 
     cartList: CartList;
+
+    cartSum: CartSum;
 
     cartPagination: CartPagination;
 
@@ -37,12 +40,24 @@ export class CartMain {
         if (e.target.classList.contains("btn-back")) {
             this.prevPage();
         }
+        if (e.target.classList.contains("amount-add") || e.target.classList.contains("amount-remove")) {
+            this.changeAmount(e.target);
+        }
+        if (e.target.classList.contains("add-promo")) {
+            this.cartSum.addPromo();
+        }
+        if (e.target.classList.contains("drop-promo")) {
+            this.cartSum.removePromo(e.target);
+        }
     }
 
     inputHandler(e: Event) {
         if (!(e.target instanceof HTMLInputElement)) return;
         if (e.target.classList.contains("num-input")) {
             this.limitInput(e.target);
+        }
+        if (e.target.classList.contains("promo-input")) {
+            this.cartSum.promoField(e.target);
         }
     }
 
@@ -76,6 +91,53 @@ export class CartMain {
         this.updateUrl(CartParams.page);
     }
 
+    changeAmount(elem: HTMLElement) {
+        const parent: HTMLElement | null = elem.closest(".cart-product");
+        const id = parent?.dataset.id;
+        console.log(id);
+        if (!id) return;
+        const product: IProduct | undefined = this.data.find((e) => e.id === Number(id));
+        if (!product) return;
+        const count: HTMLElement | null = parent.querySelector(".amount");
+        if (!count) return;
+        const curCount = count.textContent;
+        if (!curCount) return;
+        if (elem.classList.contains("amount-add")) {
+            this.addAmount(product, curCount);
+        }
+        if (elem.classList.contains("amount-remove")) {
+            this.removeAmount(product, curCount);
+        }
+    }
+
+    addAmount(product: IProduct, curCount: string) {
+        if (Number(curCount) >= product.stock) return;
+        this.currentCart.push(product);
+        console.log(this.currentCart);
+        this.productCart.currentCart = this.currentCart;
+        this.productCart.updateCart();
+        this.update();
+    }
+
+    removeAmount(product: IProduct, curCount: string) {
+        if (Number(curCount) > 1) {
+            const data = this.currentCart.slice().reverse();
+            const index = data.indexOf(product);
+            data.splice(index, 1);
+            this.currentCart = data.reverse();
+            this.productCart.currentCart = this.currentCart;
+            this.productCart.updateCart();
+            this.update();
+        }
+        if (Number(curCount) === 1) {
+            this.currentCart = this.currentCart.filter((e) => e !== product);
+            this.productCart.currentCart = this.currentCart;
+            this.currentPageItems = this.cartPagination.getPage(this.cartParams, this.currentCart);
+            this.productCart.updateCart();
+            this.update();
+        }
+    }
+
     async render(query: string) {
         this.container.replaceChildren();
         this.container.className = "main-cart";
@@ -92,6 +154,7 @@ export class CartMain {
             this.cartPagination.getCartSet(this.currentCart).length,
             this.cartParams.limit
         );
+        this.cartSum = new CartSum(this.container, this.currentCart.length, this.productCart.getTotalPrice());
     }
 
     async getCart() {
@@ -106,6 +169,7 @@ export class CartMain {
             this.cartPagination.getCartSet(this.currentCart).length,
             this.cartParams.limit
         );
+        this.cartSum.render(this.currentCart.length, this.productCart.getTotalPrice());
     }
 
     queryHandler(str: string) {

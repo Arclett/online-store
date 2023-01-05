@@ -123,7 +123,7 @@ export class ProductMain {
 
     update(e: Event) {
         if (!(e.target instanceof HTMLInputElement)) return;
-        if (e.target.classList.contains("num-input")) return;
+        if (e.target.classList.contains("num-input") || e.target.classList.contains("promo-input")) return;
         const type: string = e.target.className.split(" ")[0];
 
         if (type === "category" || type === "brand") {

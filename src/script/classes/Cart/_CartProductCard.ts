@@ -50,6 +50,9 @@ export class CartProductCard {
 
         [rmv, amount, add].forEach((e) => amountWrapper.appendChild(e));
 
+        const prodInfo = document.createElement("div");
+        prodInfo.className = "product-cart-info";
+
         const rating = document.createElement("div");
         rating.className = "cart-rating";
         rating.textContent = `${this.product.rating}`;
@@ -58,11 +61,14 @@ export class CartProductCard {
         disc.className = "cart-discount";
         disc.textContent = `${this.product.discountPercentage}%`;
 
+        prodInfo.appendChild(rating);
+        prodInfo.appendChild(disc);
+
         const price = document.createElement("div");
         price.className = "cart-price";
         price.textContent = `${this.product.price}€`;
 
-        [thumb, title, stock, desc, amountWrapper, rating, disc, price].forEach((e) => wrapper.appendChild(e));
+        [thumb, title, stock, desc, amountWrapper, prodInfo, price].forEach((e) => wrapper.appendChild(e));
 
         this.container.appendChild(wrapper);
     }

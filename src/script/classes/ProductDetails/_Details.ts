@@ -5,7 +5,8 @@ export class Details {
         this.container = container;
     }
 
-    render() {
+    render(details: string[]) {
+        console.log(details);
         this.container.replaceChildren();
         const title = document.createElement("h2");
         title.textContent = "PRODUCT INFO TITLE";

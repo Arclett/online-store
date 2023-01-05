@@ -44,11 +44,15 @@ export class ProductCart {
             this.cartPrice.textContent = "Cart total: € 0.00";
             this.cartStatus.textContent = "Cart is empty";
         } else {
-            const price = this.currentCart.reduce((acc, e) => acc + e.price, 0);
+            const price = this.getTotalPrice();
             this.cartPrice.textContent = `Cart total: € ${price}`;
             if (this.currentCart.length === 1) this.cartStatus.textContent = "In Cart: 1 product";
             else this.cartStatus.textContent = `In Cart: ${this.currentCart.length} products`;
         }
         this.saveCart();
+    }
+
+    getTotalPrice() {
+        return this.currentCart.reduce((acc, e) => acc + e.price, 0);
     }
 }

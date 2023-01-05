@@ -3,7 +3,18 @@
     width: 100%;
     grid-template-columns: 1fr 70% 1fr;
     grid-template-rows: repeat(3, 1fr);
+    background-color: antiquewhite;
     .cart-thumb {
         grid-row: span 3;
+        width: 200px;
+    }
+    .amount-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+    .product-cart-info {
+        width: 50%;
+        display: flex;
+        justify-content: space-between;
     }
 }
