@@ -12,7 +12,15 @@ export class Router {
 
     locHandling() {
         if (!main) return;
-        const path = window.location.href.split("/");
+        let path = window.location.href.split("/");
+        console.log(path);
+        if (path[path.length - 1].includes("cart")) {
+            let tail = path[path.length - 1].replace("?", "");
+            console.log(tail);
+            this.route(tail);
+            main.cart.render(tail);
+            return;
+        }
         if (path[path.length - 1] === "" || path[path.length - 1][0] === "?") {
             let tail = path[path.length - 1];
             let view: string | undefined;
@@ -28,14 +36,13 @@ export class Router {
                 tail = tail.replace("&view=thumb", "");
                 view = "thumb";
             }
-            console.log(tail);
             main.porductMain.render(tail, view);
         }
         if (path[path.length - 2] === "product-details") {
-            main.details.render();
+            main.details.render(path);
         }
-        if (path[path.length - 1] === "cart") {
-            main.cart.render();
-        }
+        // if (path[path.length - 1] === "cart") {
+        //     main.cart.render();
+        // }
     }
 }

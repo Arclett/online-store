@@ -3,6 +3,7 @@ import { loader, main, router } from "../../..";
 import { ProductList } from "./ProductList/_ProductList";
 import { ProductFilters } from "./ProductFilters/_ProductFilters";
 import { ProductListSettings } from "./ProductList/_ProductListSettings";
+import { ProductCart } from "./_ProductCart";
 
 export class ProductMain {
     data: { products: IProduct[] } = { products: [] };
@@ -20,6 +21,8 @@ export class ProductMain {
     productFilters: ProductFilters;
 
     productSettings: ProductListSettings;
+
+    productCart: ProductCart;
 
     mainContainer: HTMLElement;
 
@@ -73,13 +76,15 @@ export class ProductMain {
         if (!view) {
             view = "thumb";
         }
-
+        this.mainContainer.className = "main-product";
         await this.renderProductPage();
         this.productFilters = new ProductFilters(this.data.products, this.filtersContainer, option);
         this.productList = new ProductList(this.data.products, this.listContainer);
         this.productSettings = new ProductListSettings(this.settingsContainer);
+        this.productCart = new ProductCart(this.data.products);
         this.productSettings.updateSearchCount(main.porductMain.productList.currentList.length);
         this.productSettings.updateSearchInput(this.productFilters.filters.search[0]);
+        this.productList.updateListCartStatus();
         this.setView(view);
     }
 
@@ -118,6 +123,7 @@ export class ProductMain {
 
     update(e: Event) {
         if (!(e.target instanceof HTMLInputElement)) return;
+        if (e.target.classList.contains("num-input") || e.target.classList.contains("promo-input")) return;
         const type: string = e.target.className.split(" ")[0];
 
         if (type === "category" || type === "brand") {

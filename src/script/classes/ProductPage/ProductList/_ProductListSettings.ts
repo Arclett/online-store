@@ -1,5 +1,3 @@
-import { main } from "../../../..";
-
 export class ProductListSettings {
     container: HTMLElement;
 
@@ -99,6 +97,6 @@ export class ProductListSettings {
     }
 
     updateSearchInput(str: string) {
-        this.searchInput.value = str;
+        if (str) this.searchInput.value = str;
     }
 }
