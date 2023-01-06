@@ -23,6 +23,20 @@ export class ProductCart {
         this.updateCart();
     }
 
+    removeFromCart(prod: IProduct, elem: HTMLElement) {
+        this.currentCart = this.currentCart.filter((e) => e !== prod);
+        this.updateCart();
+        elem.classList.remove("added");
+        elem.textContent = "Add to cart";
+    }
+
+    addToCart(prod: IProduct, elem: HTMLElement) {
+        this.currentCart.push(prod);
+        this.updateCart();
+        elem.classList.add("added");
+        elem.textContent = "Drop from cart";
+    }
+
     loadCart() {
         if (localStorage.getItem("cart")) {
             const data = localStorage.getItem("cart");

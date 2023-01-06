@@ -1,5 +1,5 @@
 import { ProductMain } from "./ProductPage/_ProductMain";
-import { Details } from "./ProductDetails/_Details";
+import { Details } from "./ProductDetails/_DetailsMain";
 import { isElement } from "../types/_typeguards";
 import { CartMain } from "./Cart/_CartMain";
 import { router } from "../..";

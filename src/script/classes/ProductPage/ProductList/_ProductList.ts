@@ -129,9 +129,9 @@ export class ProductList {
         const productAdd: IProduct | undefined = this.data.find((e) => e.id === Number(prodId));
         if (!productAdd) return;
         if (elem.classList.contains("added")) {
-            this.removeFromCart(productAdd, elem);
+            main.porductMain.productCart.removeFromCart(productAdd, elem);
         } else {
-            this.addToCart(productAdd, elem);
+            main.porductMain.productCart.addToCart(productAdd, elem);
         }
     }
 

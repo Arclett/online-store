@@ -21,6 +21,11 @@ export class Router {
             main.cart.render(tail);
             return;
         }
+        if (path[path.length - 1].includes("product-details")) {
+            console.log("render details");
+            main.details.render(path);
+            return;
+        }
         if (path[path.length - 1] === "" || path[path.length - 1][0] === "?") {
             let tail = path[path.length - 1];
             let view: string | undefined;
@@ -36,11 +41,10 @@ export class Router {
                 tail = tail.replace("&view=thumb", "");
                 view = "thumb";
             }
+            console.log("main render");
             main.porductMain.render(tail, view);
         }
-        if (path[path.length - 2] === "product-details") {
-            main.details.render(path);
-        }
+
         // if (path[path.length - 1] === "cart") {
         //     main.cart.render();
         // }
