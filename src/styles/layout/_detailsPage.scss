@@ -1,0 +1,31 @@
+.product-details-main {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    .path-wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .details-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr 20%;
+        grid-template-rows: repeat(3, 1fr);
+        .image-wrapper {
+            grid-row: span 3;
+            display: flex;
+            .current-image {
+                max-width: 300px;
+            }
+            .image-preview-wrapper {
+                .image-preview {
+                    width: 100px;
+                }
+            }
+        }
+        .info-wrapper {
+            grid-row: span 3;
+        }
+    }
+}
