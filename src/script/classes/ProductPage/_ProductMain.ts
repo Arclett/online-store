@@ -36,12 +36,16 @@ export class ProductMain {
     clickHandler(e: Event) {
         if (!(e.target instanceof HTMLElement)) return;
         if (e.target.classList.contains("list")) {
+            this.productSettings.thumbnails.classList.remove("active");
+            this.productSettings.list.classList.add("active");
             this.view = "list";
             this.setView(this.view);
             const link: string = this.productFilters.makeUrl();
             router.route(link);
         }
         if (e.target.classList.contains("thumb")) {
+            this.productSettings.thumbnails.classList.add("active");
+            this.productSettings.list.classList.remove("active");
             this.view = "thumb";
             this.setView(this.view);
             const link: string = this.productFilters.makeUrl();
@@ -123,8 +127,9 @@ export class ProductMain {
 
     update(e: Event) {
         if (!(e.target instanceof HTMLInputElement)) return;
-        if (e.target.classList.contains("num-input") || e.target.classList.contains("promo-input")) return;
         const type: string = e.target.className.split(" ")[0];
+        const types = ["category", "brand", "price", "stock", "search"];
+        if (!types.includes(type)) return;
 
         if (type === "category" || type === "brand") {
             const id = e.target.id;

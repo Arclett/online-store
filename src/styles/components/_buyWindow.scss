@@ -1,0 +1,30 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 6;
+    background-color: rgba(0, 0, 0, 0.614);
+}
+
+.buy-window-wrapper {
+    position: fixed;
+    width: 40%;
+    left: 30%;
+    top: 30%;
+    z-index: 10;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.valid {
+    border: 1px solid green;
+    color: green;
+}
+
+.invalid {
+    border: 1px solid red;
+    color: red;
+}

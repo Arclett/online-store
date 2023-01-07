@@ -37,6 +37,12 @@ export class Main {
                 router.locHandling();
             }
         }
+        if (e.target.classList.contains("main-title")) {
+            if (router) {
+                router.route("/");
+                router.locHandling();
+            }
+        }
     }
 
     inputHandler(e: Event) {

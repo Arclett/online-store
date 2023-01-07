@@ -5,6 +5,7 @@ import { CartList } from "./_CartList";
 import { ProductCart } from "../ProductPage/_ProductCart";
 import { CartPagination } from "./_CartPagination";
 import { CartSum } from "./_CartSum";
+import { BuyWindow } from "../Buy/_BuyWindow";
 
 export class CartMain {
     container: HTMLElement;
@@ -25,9 +26,12 @@ export class CartMain {
 
     currentPageItems: IProduct[];
 
+    buyWindow: BuyWindow;
+
     constructor(container: HTMLElement) {
         this.container = container;
         this.cartPagination = new CartPagination();
+        this.buyWindow = new BuyWindow(this.container);
         this.container.addEventListener("click", this.clickHandler.bind(this));
         this.container.addEventListener("input", this.inputHandler.bind(this));
     }
@@ -48,6 +52,12 @@ export class CartMain {
         }
         if (e.target.classList.contains("drop-promo")) {
             this.cartSum.removePromo(e.target);
+        }
+        if (e.target.classList.contains("buy-button")) {
+            this.buyWindow.render(this.container);
+        }
+        if (e.target.classList.contains("overlay")) {
+            this.update();
         }
     }
 
@@ -145,8 +155,11 @@ export class CartMain {
         this.queryHandler(query);
         this.productCart = new ProductCart(this.data);
         this.currentCart = this.productCart.currentCart;
+        if (this.currentCart.length === 0) {
+            this.renderEmpty();
+            return;
+        }
         this.currentPageItems = this.cartPagination.getPage(this.cartParams, this.currentCart);
-        console.log(this.currentPageItems);
         this.cartList = new CartList(
             this.container,
             this.currentPageItems,
@@ -202,5 +215,13 @@ export class CartMain {
         console.log(tail);
         const url = `/cart?${tail.join("&")}`;
         router.route(url);
+    }
+
+    renderEmpty() {
+        const empty = document.createElement("div");
+        empty.className = "cart-empty";
+        empty.textContent = "Cart is Empty";
+
+        this.container.appendChild(empty);
     }
 }
