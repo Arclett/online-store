@@ -1,4 +1,4 @@
-import { loader } from "../../..";
+import { loader, main, router } from "../../..";
 import { IProduct } from "../../types/_interfaces";
 import { ProductCart } from "../ProductPage/_ProductCart";
 
@@ -29,6 +29,19 @@ export class Details {
             if (!(e.target instanceof HTMLImageElement)) return;
             this.imgCurrent.src = e.target.src;
         }
+        if (e.target.classList.contains("details-buy")) {
+            if (!this.productCart.currentCart.includes(this.currentProduct)) {
+                this.productCart.currentCart.push(this.currentProduct);
+                this.productCart.saveCart();
+            }
+            this.fastBuy();
+        }
+    }
+
+    async fastBuy() {
+        router.route("/cart");
+        await main.cart.render("/");
+        main.cart.buyWindow.render(this.container);
     }
 
     updateCart(elem: HTMLElement) {

@@ -4,4 +4,17 @@
     color: white;
     background-color: black;
     align-items: center;
+    padding: 0 20px;
+    .header__cart-wrapper {
+        width: 30%;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        align-items: center;
+        font-size: 30px;
+        .cart-logo {
+            width: 50px;
+            height: 50px;
+        }
+    }
 }

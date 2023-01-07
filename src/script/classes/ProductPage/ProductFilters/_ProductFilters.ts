@@ -35,7 +35,6 @@ export class ProductFilters {
 
     assignFilters(data: string) {
         const arr = data.replace("?", "").split("&");
-        console.log(arr);
 
         this.filters = {
             category: this.splitFilters("category", arr),
@@ -45,7 +44,6 @@ export class ProductFilters {
             sort: this.splitFilters("sort", arr),
             search: this.splitFilters("search", arr),
         };
-        console.log(this.filters);
     }
 
     splitFilters(str: string, arr: string[]) {

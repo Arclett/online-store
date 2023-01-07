@@ -5,6 +5,10 @@ export class ProductListSettings {
 
     searchInput: HTMLInputElement;
 
+    thumbnails: HTMLElement;
+
+    list: HTMLElement;
+
     constructor(container: HTMLElement) {
         this.container = container;
 
@@ -66,15 +70,15 @@ export class ProductListSettings {
     renderView() {
         const viewWrapper = document.createElement("div");
         viewWrapper.className = "view-wrapper";
-        const thumbnails = document.createElement("div");
-        thumbnails.className = "thumb";
-        thumbnails.textContent = "thumb";
-        const list = document.createElement("div");
-        list.className = "list";
-        list.textContent = "list";
+        this.thumbnails = document.createElement("div");
+        this.thumbnails.className = "thumb";
+        this.thumbnails.textContent = "Thumbnails";
+        this.list = document.createElement("div");
+        this.list.className = "list";
+        this.list.textContent = "List";
 
-        viewWrapper.appendChild(thumbnails);
-        viewWrapper.appendChild(list);
+        viewWrapper.appendChild(this.thumbnails);
+        viewWrapper.appendChild(this.list);
         this.container.appendChild(viewWrapper);
     }
 
