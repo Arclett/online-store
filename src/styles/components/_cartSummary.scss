@@ -62,14 +62,14 @@
     }
     .price-discount {
         height: 50px;
-        font-size: 30px;
+        font-size: 20px;
         @include centered;
         @include inputBox;
     }
     .buy-button {
         height: 50px;
         @include inputBox;
-        font-size: 30px;
+        font-size: 20px;
         color: white;
         background-color: black;
     }

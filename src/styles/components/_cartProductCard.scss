@@ -1,7 +1,6 @@
 .cart-product {
     display: grid;
     width: 100%;
-    min-width: 800px;
     height: 140px;
     grid-template-columns: 1fr 60% 1fr;
     grid-template-rows: repeat(3, 1fr);

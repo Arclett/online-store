@@ -58,27 +58,10 @@ export class ProductFilters {
 
     makeUrl(): string {
         const filter = this.filters;
-        if (
-            filter.brand.length === 0 &&
-            filter.category.length === 0 &&
-            filter.price.length === 0 &&
-            filter.stock.length === 0 &&
-            filter.sort.length === 0 &&
-            filter.search.length === 0 &&
-            !main.porductMain.view
-        ) {
-            return "/";
-        }
-        if (
-            filter.price[0] === main.porductMain.productList.priceRange[0] &&
-            filter.price[1] === main.porductMain.productList.priceRange[1] &&
-            filter.stock[0] === main.porductMain.productList.stockRange[0] &&
-            filter.stock[1] === main.porductMain.productList.stockRange[1]
-        ) {
-            return "/";
-        }
+        if (this.isFiltersEmpty(filter)) return "/";
+        if (this.isPriceEmpty(filter) && this.isStockEmpty(filter)) return "/";
 
-        let url: string = "/?";
+        let url = "/?";
         if (filter.category.length > 0) url += `category=${filter.category.join("↕")}&`;
         if (filter.brand.length > 0) url += `brand=${filter.brand.join("↕")}&`;
         if (
@@ -105,5 +88,39 @@ export class ProductFilters {
         if (url[url.length - 1] === "&") return url.slice(0, url.length - 1);
 
         return url;
+    }
+
+    isFiltersEmpty(filter: IFilters) {
+        if (
+            filter.brand.length === 0 &&
+            filter.category.length === 0 &&
+            filter.price.length === 0 &&
+            filter.stock.length === 0 &&
+            filter.sort.length === 0 &&
+            filter.search.length === 0 &&
+            !main.porductMain.view
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    isPriceEmpty(filter: IFilters) {
+        if (
+            filter.price[0] === main.porductMain.productList.priceRange[0] &&
+            filter.price[1] === main.porductMain.productList.priceRange[1]
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    isStockEmpty(filter: IFilters) {
+        if (
+            filter.stock[0] === main.porductMain.productList.stockRange[0] &&
+            filter.stock[1] === main.porductMain.productList.stockRange[1]
+        ) {
+            return true;
+        } else return false;
     }
 }

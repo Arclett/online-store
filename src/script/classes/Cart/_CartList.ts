@@ -1,12 +1,11 @@
-import { ICartParams, IProduct } from "../../types/_interfaces";
-import { cartListSettings } from "./_CartListSettings";
-import { main } from "../../..";
+import { IProduct } from "../../types/_interfaces";
+import { CartListSettings } from "./_CartListSettings";
 import { CartProductCard } from "./_CartProductCard";
 
 export class CartList {
     container: HTMLElement;
 
-    cartListSettings: cartListSettings;
+    cartListSettings: CartListSettings;
 
     constructor(
         container: HTMLElement,
@@ -29,7 +28,7 @@ export class CartList {
         listSettings.className = "cart-list-settings";
         listWrapper.appendChild(listSettings);
 
-        this.cartListSettings = new cartListSettings(listSettings, currentPageNumber, maxLimit, limit);
+        this.cartListSettings = new CartListSettings(listSettings, currentPageNumber, maxLimit, limit);
 
         curentPage.forEach((e) => new CartProductCard(e, listWrapper));
     }

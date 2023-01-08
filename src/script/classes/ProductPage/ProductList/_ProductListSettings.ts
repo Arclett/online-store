@@ -37,12 +37,12 @@ export class ProductListSettings {
         option.selected = true;
         sortSecelt.appendChild(option);
         ["price-ASC", "price-DESC", "rating-ASC", "rating-DESC"]
-            .map((e, i) => {
-                const option = document.createElement("option");
-                option.value = e;
-                option.className = "sort-option";
-                option.textContent = `Sort by ${e.split("-")[0]} ${e.split("-")[1]}`;
-                return option;
+            .map((e) => {
+                const opt = document.createElement("option");
+                opt.value = e;
+                opt.className = "sort-option";
+                opt.textContent = `Sort by ${e.split("-")[0]} ${e.split("-")[1]}`;
+                return opt;
             })
             .forEach((e) => sortSecelt.appendChild(e));
         sortWrapper.appendChild(sortLabel);
@@ -54,7 +54,6 @@ export class ProductListSettings {
         const searchWrapper = document.createElement("div");
         searchWrapper.className = "search-wrapper";
         this.searchCount = document.createElement("label");
-        // this.searchCount.textContent = `Found: 99`;
         this.searchCount.className = "search-count";
         this.searchCount.htmlFor = "search-input";
         this.searchInput = document.createElement("input");

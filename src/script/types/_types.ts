@@ -1,1 +1,1 @@
-export type promo = [string, number];
+export type Promo = [string, number];

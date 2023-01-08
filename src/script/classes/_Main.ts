@@ -52,4 +52,12 @@ export class Main {
     changeHandler(e: Event) {
         this.porductMain.sort(e);
     }
+
+    render404() {
+        this.container?.replaceChildren();
+
+        const notFound = document.createElement("div");
+        notFound.textContent = "PAGE NOT FOUND (404)";
+        notFound.className = "no-product";
+    }
 }

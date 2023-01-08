@@ -1,4 +1,4 @@
-import { promo } from "../../types/_types";
+import { Promo } from "../../types/_types";
 
 export class CartSum {
     container: HTMLElement;
@@ -9,7 +9,7 @@ export class CartSum {
 
     curentDiscount: number;
 
-    promoCodes: promo[];
+    promoCodes: Promo[];
 
     currentPromo: string[] = [];
 
@@ -69,7 +69,7 @@ export class CartSum {
         }
     }
 
-    getPromoByName(str: string): promo | undefined {
+    getPromoByName(str: string): Promo | undefined {
         return this.promoCodes.find((e) => str === e[0]);
     }
 
