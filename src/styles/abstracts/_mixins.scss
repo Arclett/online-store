@@ -9,3 +9,9 @@
     border-radius: 7px;
     box-shadow: 3px 3px 3px $grey;
 }
+
+@mixin centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

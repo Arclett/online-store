@@ -154,7 +154,7 @@ export class Details {
 
         const price = document.createElement("div");
         price.className = "details-price";
-        price.textContent = `${this.currentProduct.price}`;
+        price.textContent = `${this.currentProduct.price}€`;
 
         this.addButton = document.createElement("button");
         this.addButton.className = "details-cart-button";

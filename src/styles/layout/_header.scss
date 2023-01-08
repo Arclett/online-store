@@ -7,6 +7,7 @@
     padding: 0 20px;
     .header__cart-wrapper {
         width: 30%;
+        min-width: 600px;
         display: flex;
         justify-content: flex-end;
         gap: 10px;
