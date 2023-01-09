@@ -71,10 +71,8 @@ export class Details {
     }
 
     getProduct(details: string[]) {
-        console.log(details);
         const str = details[details.length - 1].split("-");
         const id = str[str.length - 1];
-        console.log(id);
         return this.data.find((e) => e.id === Number(id));
     }
 
@@ -113,7 +111,8 @@ export class Details {
         const imgPrev = document.createElement("div");
         imgPrev.className = "image-preview-wrapper";
 
-        this.currentProduct.images.forEach((e) => {
+        const imgData = Array.from(new Set(this.currentProduct.images));
+        imgData.forEach((e) => {
             const img = new Image();
             img.loading = "lazy";
             img.src = e;

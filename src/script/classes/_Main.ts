@@ -31,7 +31,11 @@ export class Main {
 
     clickHandler(e: Event) {
         if (!(e.target instanceof HTMLElement)) return;
-        if (e.target.classList.contains("cart-logo")) {
+        if (
+            e.target.classList.contains("cart-logo") ||
+            e.target.classList.contains("cart-total") ||
+            e.target.classList.contains("cart-status")
+        ) {
             if (router) {
                 router.route("/cart");
                 router.locHandling();
@@ -54,10 +58,13 @@ export class Main {
     }
 
     render404() {
-        this.container?.replaceChildren();
+        if (!this.container) return;
+        this.container.replaceChildren();
 
         const notFound = document.createElement("div");
         notFound.textContent = "PAGE NOT FOUND (404)";
         notFound.className = "no-product";
+
+        this.container.appendChild(notFound);
     }
 }

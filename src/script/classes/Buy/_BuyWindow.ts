@@ -33,7 +33,6 @@ export class BuyWindow {
     }
 
     submitHandler(e: Event) {
-        console.log("keke");
         e.preventDefault();
         this.confirmOrder();
     }
@@ -111,7 +110,6 @@ export class BuyWindow {
     }
 
     checkFormValidity(): string {
-        console.log("lolo");
         let error = "";
         if (!this.checkName(this.nameInput.value)) error += "Name ";
         if (!this.checkAdress(this.adressInput.value)) error += "Adress ";
@@ -120,7 +118,6 @@ export class BuyWindow {
         if (!this.checkDate(this.cardDateInput.value)) error += "Card Date ";
         if (!this.checkEmail(this.emailInput.value)) error += "Email ";
         if (!this.checkPhone(this.phoneInput.value)) error += "Phone ";
-        console.log(error);
         return error.slice(0, -1);
     }
 

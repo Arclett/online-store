@@ -6,9 +6,12 @@ export class CartProductCard {
 
     container: HTMLElement;
 
-    constructor(product: IProduct, container: HTMLElement) {
+    index: number;
+
+    constructor(product: IProduct, container: HTMLElement, index: number) {
         this.container = container;
         this.product = product;
+        this.index = index;
         this.render();
     }
 
@@ -23,7 +26,7 @@ export class CartProductCard {
 
         const title = document.createElement("div");
         title.className = "cart-title";
-        title.textContent = `${this.product.title}`;
+        title.textContent = `${this.index + 1}. ${this.product.title}`;
 
         const stock = document.createElement("div");
         stock.className = "cart-stock";

@@ -30,6 +30,6 @@ export class CartList {
 
         this.cartListSettings = new CartListSettings(listSettings, currentPageNumber, maxLimit, limit);
 
-        curentPage.forEach((e) => new CartProductCard(e, listWrapper));
+        curentPage.forEach((e, i) => new CartProductCard(e, listWrapper, i));
     }
 }
