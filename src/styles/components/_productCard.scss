@@ -18,7 +18,7 @@
             @include toCenter;
         }
         .product-title {
-            font-size: 25px;
+            font-size: 15px;
             grid-column: span 2;
         }
         .infoButton,
@@ -28,7 +28,7 @@
             background-color: white;
             color: black;
             border-radius: 5px;
-            font-size: 25px;
+            font-size: 15px;
             margin: 0 auto;
         }
     }
@@ -50,13 +50,13 @@
 
 .view-thumb {
     flex-direction: column;
-    height: 600px;
-    width: 300px;
-    margin: 20px auto;
+    height: 400px;
+    width: 150px;
+    margin: 10px 10px;
     border-radius: 5px;
     @include inputBox;
     .thumbnail {
-        height: 400px;
+        height: 200px;
     }
     .product-info {
         padding: 5px;

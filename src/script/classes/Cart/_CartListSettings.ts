@@ -1,5 +1,6 @@
-export class cartListSettings {
+export class CartListSettings {
     container: HTMLElement;
+
     constructor(container: HTMLElement, pageNumber: number, maxLimit: number, limit: number) {
         this.container = container;
         this.render(pageNumber, maxLimit, limit);

@@ -7,25 +7,72 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
+        @include inputBox;
+        padding: 5px;
+        div {
+            background-color: black;
+            border-radius: 5px;
+            color: white;
+            padding: 3px;
+        }
     }
     .details-wrapper {
         display: grid;
-        grid-template-columns: 1fr 1fr 20%;
+        grid-template-columns: 1fr 1fr 10%;
         grid-template-rows: repeat(3, 1fr);
+        @include inputBox;
+        padding: 10px;
         .image-wrapper {
             grid-row: span 3;
             display: flex;
             .current-image {
+                object-fit: cover;
                 max-width: 300px;
+                margin: 0 10px;
             }
             .image-preview-wrapper {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
                 .image-preview {
                     width: 100px;
+                    @include inputBox;
                 }
             }
         }
         .info-wrapper {
             grid-row: span 3;
+            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            .subtitle {
+                background-color: black;
+                color: white;
+                border-radius: 5px;
+            }
+            .details-info {
+                @include inputBox;
+            }
+
+            .subtitle,
+            .details-info {
+                @include centered;
+                padding: 3px;
+            }
+        }
+        .details-price,
+        .details-cart-button,
+        .details-buy {
+            margin-bottom: 5px;
+            @include inputBox;
+            @include centered;
+            font-size: 20px;
+        }
+
+        .details-price {
+            background-color: black;
+            color: white;
         }
     }
 }

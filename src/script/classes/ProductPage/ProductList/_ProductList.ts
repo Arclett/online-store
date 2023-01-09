@@ -1,4 +1,4 @@
-import { IProduct } from "../../../types/_interfaces";
+import { IFilters, IProduct } from "../../../types/_interfaces";
 import { ProductCard } from "./_ProductCard";
 import { router, main } from "../../../..";
 import { RangeFilters } from "../../../types/_enums";
@@ -27,9 +27,9 @@ export class ProductList {
 
     clickHandler(e: Event): void {
         if (!(e.target instanceof HTMLElement)) return;
-        if (e.target.classList.contains("product") || e.target.classList.contains("infoButton")) {
+        if (e.target.classList.contains("thumbnail") || e.target.classList.contains("infoButton")) {
             if (router) {
-                router.route(`/product-details/${e.target.dataset.id}`);
+                router.route(`/product-details-${e.target.dataset.id}`);
                 router.locHandling();
             }
         }
@@ -41,16 +41,8 @@ export class ProductList {
     filterData() {
         const filter = main.porductMain.productFilters.filters;
         this.currentList = this.data;
-        console.log(filter.search);
-        if (
-            filter.brand.length === 0 &&
-            filter.category.length === 0 &&
-            filter.price.length === 0 &&
-            filter.stock.length === 0 &&
-            filter.search.length === 0
-        ) {
-            return;
-        }
+        if (this.isFilterEmpty(filter)) return;
+
         this.currentList = this.currentList.filter((e) => {
             let category: boolean, brand: boolean, price: boolean, stock: boolean, search: boolean;
             if (filter.category.length > 0) category = filter.category.includes(e.category);
@@ -65,6 +57,19 @@ export class ProductList {
             else search = true;
             if (category && brand && price && stock && search) return true;
         });
+    }
+
+    isFilterEmpty(filter: IFilters) {
+        if (
+            filter.brand.length === 0 &&
+            filter.category.length === 0 &&
+            filter.price.length === 0 &&
+            filter.stock.length === 0 &&
+            filter.search.length === 0
+        ) {
+            return true;
+        }
+        return false;
     }
 
     search(str: string, elem: IProduct) {
@@ -99,6 +104,10 @@ export class ProductList {
 
     renderList(data: IProduct[]) {
         this.container.replaceChildren();
+        if (data.length === 0) {
+            this.renderNoProduct();
+            return;
+        }
         data.forEach((e) => {
             const product: HTMLElement = document.createElement("div");
             product.className = `product view-thumb`;
@@ -106,6 +115,13 @@ export class ProductList {
             this.container.appendChild(product);
             new ProductCard(e, product);
         });
+    }
+
+    renderNoProduct() {
+        const noProduct = document.createElement("div");
+        noProduct.textContent = "No product found";
+        noProduct.className = "no-product";
+        this.container.appendChild(noProduct);
     }
 
     updateList() {

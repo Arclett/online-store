@@ -1,4 +1,4 @@
-import { promo } from "../../types/_types";
+import { Promo } from "../../types/_types";
 
 export class CartSum {
     container: HTMLElement;
@@ -9,7 +9,7 @@ export class CartSum {
 
     curentDiscount: number;
 
-    promoCodes: promo[];
+    promoCodes: Promo[];
 
     currentPromo: string[] = [];
 
@@ -69,7 +69,7 @@ export class CartSum {
         }
     }
 
-    getPromoByName(str: string): promo | undefined {
+    getPromoByName(str: string): Promo | undefined {
         return this.promoCodes.find((e) => str === e[0]);
     }
 
@@ -105,10 +105,11 @@ export class CartSum {
         title.textContent = "Summary";
 
         const prodNumber = document.createElement("div");
-        prodNumber.textContent = `${productNumber}`;
+        prodNumber.textContent = `Products: ${productNumber}`;
+        prodNumber.className = "sum-products-number";
 
         const price = document.createElement("div");
-        price.textContent = `${priceTotal}€`;
+        price.textContent = `Price: ${priceTotal}€`;
         price.className = "total-price";
 
         this.promoInput = document.createElement("input");
@@ -133,6 +134,7 @@ export class CartSum {
         if (this.currentPromo.length !== 0) {
             const priceDisc = document.createElement("div");
             priceDisc.textContent = `PRICE NOW: ${this.getDiscountPrice()}€`;
+            priceDisc.className = "price-discount";
             price.className = "total-price line-through";
 
             const appliedCodesWrapper = document.createElement("div");

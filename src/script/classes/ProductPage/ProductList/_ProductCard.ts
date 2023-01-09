@@ -31,10 +31,10 @@ export class ProductCard {
         rating.textContent = `Rating: ${this.product.rating}`;
         const stock: HTMLElement = document.createElement("div");
         stock.textContent = `Stock: ${this.product.stock}`;
-        const addButton: HTMLElement = document.createElement("div");
+        const addButton: HTMLElement = document.createElement("button");
         addButton.className = "add-to-cart";
         addButton.textContent = "Add to Cart";
-        const infoButton: HTMLElement = document.createElement("div");
+        const infoButton: HTMLElement = document.createElement("button");
         infoButton.className = "infoButton";
         infoButton.textContent = "Details";
         infoButton.dataset.id = `${this.product.id}`;

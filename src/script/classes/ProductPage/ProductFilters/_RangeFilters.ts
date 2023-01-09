@@ -1,19 +1,25 @@
 import { IProduct, IFilters } from "../../../types/_interfaces";
 import { RangeFilters } from "../../../types/_enums";
-import { main } from "../../../..";
 
 export class RangeFilter {
     container: HTMLElement;
+
     filters: IFilters;
 
     priceLabelMin: HTMLLabelElement;
+
     priceLabelMax: HTMLLabelElement;
+
     stockLabelMax: HTMLLabelElement;
+
     stockLabelMin: HTMLLabelElement;
 
     priceInputMax: HTMLInputElement;
+
     priceInputMin: HTMLInputElement;
+
     stockInputMin: HTMLInputElement;
+
     stockInputMax: HTMLInputElement;
 
     stock: HTMLLabelElement;
@@ -22,6 +28,7 @@ export class RangeFilter {
         this.container = container;
         this.filters = filters;
     }
+
     renderRange(data: IProduct[], type: RangeFilters) {
         const [dataMin, dataMax] = this.getRangeValue(type, data);
         const labelContainer = document.createElement("div");

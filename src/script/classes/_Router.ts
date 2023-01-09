@@ -12,21 +12,17 @@ export class Router {
 
     locHandling() {
         if (!main) return;
-        let path = window.location.href.split("/");
+        const path = window.location.href.split("/");
         console.log(path);
         if (path[path.length - 1].includes("cart")) {
-            let tail = path[path.length - 1].replace("?", "");
-            console.log(tail);
+            const tail = path[path.length - 1].replace("?", "");
             this.route(tail);
             main.cart.render(tail);
             return;
-        }
-        if (path[path.length - 1].includes("product-details")) {
-            console.log("render details");
+        } else if (path[path.length - 1].includes("product-details")) {
             main.details.render(path);
             return;
-        }
-        if (path[path.length - 1] === "" || path[path.length - 1][0] === "?") {
+        } else if (path[path.length - 1] === "" || path[path.length - 1][0] === "?") {
             let tail = path[path.length - 1];
             let view: string | undefined;
             if (tail === "?view=list" || tail === "?view=thumb") {
@@ -41,12 +37,9 @@ export class Router {
                 tail = tail.replace("&view=thumb", "");
                 view = "thumb";
             }
-            console.log("main render");
             main.porductMain.render(tail, view);
+        } else {
+            main.render404();
         }
-
-        // if (path[path.length - 1] === "cart") {
-        //     main.cart.render();
-        // }
     }
 }

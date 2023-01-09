@@ -3,11 +3,14 @@ import { FilterType } from "../../../types/_enums";
 
 export class CheckFilter {
     container: HTMLElement;
+
     filters: IFilters;
+
     constructor(container: HTMLElement, filters: IFilters) {
         this.container = container;
         this.filters = filters;
     }
+
     renderFilter(data: IProduct[], type: FilterType) {
         const categoryList = document.createElement("div");
         categoryList.className = `${type}-list check-filter`;

@@ -68,7 +68,7 @@ export class CartProductCard {
         price.className = "cart-price";
         price.textContent = `${this.product.price}€`;
 
-        [thumb, title, stock, desc, amountWrapper, prodInfo, price].forEach((e) => wrapper.appendChild(e));
+        [thumb, title, price, desc, amountWrapper, prodInfo, stock].forEach((e) => wrapper.appendChild(e));
 
         this.container.appendChild(wrapper);
     }

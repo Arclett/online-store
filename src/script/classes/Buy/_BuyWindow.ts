@@ -9,7 +9,7 @@ export class BuyWindow {
 
     emailInput: HTMLInputElement;
 
-    ccnLabel: HTMLLabelElement;
+    ccnLabel: HTMLImageElement;
 
     ccnInput: HTMLInputElement;
 
@@ -42,11 +42,11 @@ export class BuyWindow {
         e.preventDefault();
         if (!(e.target instanceof HTMLInputElement)) return;
         if (e.target.classList.contains("buy-window-input") || e.target.classList.contains("card-input")) {
-            this.inputValidation(e.target, e);
+            this.inputValidation(e.target);
         }
     }
 
-    inputValidation(elem: HTMLInputElement, e: Event) {
+    inputValidation(elem: HTMLInputElement) {
         if (elem.value === "") {
             elem.classList.remove("valid");
             elem.classList.remove("invalid");
@@ -70,6 +70,13 @@ export class BuyWindow {
         if (elem.classList.contains("adress-input")) this.checkInputValidity(this.checkAdress, elem);
         if (elem.classList.contains("email-input")) this.checkInputValidity(this.checkEmail, elem);
         if (elem.classList.contains("ccn-input")) {
+            if (elem.value[0] === "4") {
+                this.ccnLabel.src = "../../assets/svg/visa-logo.svg";
+            } else if (elem.value[0] === "3") {
+                this.ccnLabel.src = "../../assets/svg/ae-logo.svg";
+            } else if (elem.value.slice(0, 2) === "55") {
+                this.ccnLabel.src = "../../assets/svg/vc-logo.svg";
+            } else this.ccnLabel.src = "../../assets/svg/credit-card-logo.svg";
             this.formatCcn(elem);
             this.checkInputValidity(this.checkCcn, elem);
         }
@@ -191,8 +198,10 @@ export class BuyWindow {
     }
 
     checkCcn(str: string): boolean {
-        if (str.length !== 19) return false;
-        return true;
+        if (str.length === 19 && (str[0] === "4" || str[0] === "3" || str.slice(0, 2) === "55")) {
+            return true;
+        }
+        return false;
     }
 
     isInputChar(char: string) {
@@ -242,6 +251,7 @@ export class BuyWindow {
         this.submit = document.createElement("input");
         this.submit.type = "submit";
         this.submit.className = "submit";
+        this.submit.value = "Confirm";
         this.buyForm.appendChild(this.submit);
 
         this.errorWindow = document.createElement("div");
@@ -256,9 +266,9 @@ export class BuyWindow {
         const cardSubtitle = document.createElement("legend");
         cardSubtitle.textContent = "Card details";
 
-        this.ccnLabel = document.createElement("label");
-        this.ccnLabel.htmlFor = "ccn-input";
-        this.ccnLabel.textContent = "CCN";
+        this.ccnLabel = new Image();
+        this.ccnLabel.className = "ccn-logo";
+        this.ccnLabel.src = "../../assets/svg/credit-card-logo.svg";
 
         this.ccnInput = document.createElement("input");
         this.ccnInput.type = "tel";
