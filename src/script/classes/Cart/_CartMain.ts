@@ -59,6 +59,14 @@ export class CartMain {
         if (e.target.classList.contains("overlay")) {
             this.update();
         }
+        if (e.target.classList.contains("cart-thumb")) {
+            const parent: HTMLElement | null = e.target.closest(".cart-product");
+            const id = parent?.dataset.id;
+            if (id) {
+                router.route(`/product-details-${id}`);
+                router.locHandling();
+            }
+        }
     }
 
     inputHandler(e: Event) {
@@ -87,7 +95,6 @@ export class CartMain {
             return;
         this.cartParams.page += 1;
         this.currentPageItems = this.cartPagination.getPage(this.cartParams, this.currentCart);
-        console.log(this.currentPageItems);
         this.update();
         this.updateUrl(CartParams.page);
     }
@@ -96,7 +103,6 @@ export class CartMain {
         if (this.cartParams.page === 1) return;
         this.cartParams.page -= 1;
         this.currentPageItems = this.cartPagination.getPage(this.cartParams, this.currentCart);
-        console.log(this.currentPageItems);
         this.update();
         this.updateUrl(CartParams.page);
     }
@@ -104,7 +110,6 @@ export class CartMain {
     changeAmount(elem: HTMLElement) {
         const parent: HTMLElement | null = elem.closest(".cart-product");
         const id = parent?.dataset.id;
-        console.log(id);
         if (!id) return;
         const product: IProduct | undefined = this.data.find((e) => e.id === Number(id));
         if (!product) return;
@@ -123,7 +128,6 @@ export class CartMain {
     addAmount(product: IProduct, curCount: string) {
         if (Number(curCount) >= product.stock) return;
         this.currentCart.push(product);
-        console.log(this.currentCart);
         this.productCart.currentCart = this.currentCart;
         this.productCart.updateCart();
         this.update();
@@ -142,6 +146,9 @@ export class CartMain {
         if (Number(curCount) === 1) {
             this.currentCart = this.currentCart.filter((e) => e !== product);
             this.productCart.currentCart = this.currentCart;
+            if (this.currentPageItems.length === 1) {
+                this.cartParams.page -= 1;
+            }
             this.currentPageItems = this.cartPagination.getPage(this.cartParams, this.currentCart);
             this.productCart.updateCart();
             this.update();
@@ -199,7 +206,6 @@ export class CartMain {
 
     updateUrl(type: CartParams) {
         const curPath = window.location.href.split("/");
-        console.log(window.location.href);
         const tail = curPath[curPath.length - 1]
             .replace("cart", "")
             .replace("?", "")
@@ -212,7 +218,6 @@ export class CartMain {
         } else {
             tail.push(`${type}=${this.cartParams[type]}`);
         }
-        console.log(tail);
         const url = `/cart?${tail.join("&")}`;
         router.route(url);
     }

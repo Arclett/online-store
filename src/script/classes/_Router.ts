@@ -13,7 +13,6 @@ export class Router {
     locHandling() {
         if (!main) return;
         const path = window.location.href.split("/");
-        console.log(path);
         if (path[path.length - 1].includes("cart")) {
             const tail = path[path.length - 1].replace("?", "");
             this.route(tail);

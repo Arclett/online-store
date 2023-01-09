@@ -19,6 +19,9 @@
         div {
             @include inputBox;
             padding: 0 5px;
+            &:hover {
+                @include onHover;
+            }
         }
     }
     .sort-wrapper {
@@ -46,6 +49,9 @@
     .reset {
         padding: 0 5px;
         @include inputBox;
+        &:hover {
+            @include onHover;
+        }
     }
 }
 
