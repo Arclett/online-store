@@ -5,13 +5,13 @@ import { CartMain } from "./Cart/_CartMain";
 import { router } from "../..";
 
 export class Main {
-    porductMain: ProductMain;
+    public porductMain: ProductMain;
 
-    details: Details;
+    public details: Details;
 
-    cart: CartMain;
+    public cart: CartMain;
 
-    container: HTMLElement | null;
+    private container: HTMLElement | null;
 
     constructor() {
         const mainElement: HTMLElement | null = document.querySelector(".main");
@@ -29,7 +29,7 @@ export class Main {
         }
     }
 
-    clickHandler(e: Event) {
+    private clickHandler(e: Event) {
         if (!(e.target instanceof HTMLElement)) return;
         if (
             e.target.classList.contains("cart-logo") ||
@@ -49,15 +49,15 @@ export class Main {
         }
     }
 
-    inputHandler(e: Event) {
+    private inputHandler(e: Event) {
         this.porductMain.update(e);
     }
 
-    changeHandler(e: Event) {
+    private changeHandler(e: Event) {
         this.porductMain.sort(e);
     }
 
-    render404() {
+    public render404() {
         if (!this.container) return;
         this.container.replaceChildren();
 

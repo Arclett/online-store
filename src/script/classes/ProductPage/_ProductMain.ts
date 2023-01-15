@@ -1,39 +1,39 @@
 import { IProduct } from "../../types/_interfaces";
-import { loader, main, router } from "../../..";
+import { loader, router, main } from "../../..";
 import { ProductList } from "./ProductList/_ProductList";
 import { ProductFilters } from "./ProductFilters/_ProductFilters";
-import { ProductListSettings } from "./ProductList/_ProductListSettings";
+import ProductListSettings from "./ProductList/_ProductListSettings";
 import { ProductCart } from "./_ProductCart";
 
 export class ProductMain {
-    data: { products: IProduct[] } = { products: [] };
+    private data: { products: IProduct[] } = { products: [] };
 
-    listContainer: HTMLElement;
+    private listContainer: HTMLElement;
 
-    filtersContainer: HTMLElement;
+    private filtersContainer: HTMLElement;
 
-    settingsContainer: HTMLElement;
+    private settingsContainer: HTMLElement;
 
-    thumbnails: HTMLImageElement[] = [];
+    public thumbnails: HTMLImageElement[] = [];
 
-    productList: ProductList;
+    public productList: ProductList;
 
-    productFilters: ProductFilters;
+    public productFilters: ProductFilters;
 
-    productSettings: ProductListSettings;
+    public productSettings: ProductListSettings;
 
-    productCart: ProductCart;
+    public productCart: ProductCart;
 
-    mainContainer: HTMLElement;
+    private mainContainer: HTMLElement;
 
-    view: string | undefined;
+    public view: string | undefined;
 
     constructor(container: HTMLElement) {
         this.mainContainer = container;
         this.mainContainer.addEventListener("click", this.clickHandler.bind(this));
     }
 
-    clickHandler(e: Event) {
+    private clickHandler(e: Event) {
         if (!(e.target instanceof HTMLElement)) return;
         if (e.target.classList.contains("list")) {
             this.productSettings.thumbnails.classList.remove("active");
@@ -121,8 +121,8 @@ export class ProductMain {
         });
     }
 
-    getImage(id: number) {
-        return this.thumbnails.find((e) => e.dataset.id === `${id}`);
+    getImage(id: number, data: HTMLImageElement[]) {
+        return data.find((e) => e.dataset.id === `${id}`);
     }
 
     update(e: Event) {

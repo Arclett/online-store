@@ -80,4 +80,8 @@ export class CartProductCard {
         const cart = main.cart.currentCart;
         return cart.filter((e) => e.id === id).length;
     }
+
+    testMethod(a: number, b: number) {
+        return a - b;
+    }
 }

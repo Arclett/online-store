@@ -41,7 +41,7 @@ export class ProductCard {
         const infoContainer = document.createElement("div");
         infoContainer.className = "product-info";
         if (main.porductMain) {
-            const img = main.porductMain.getImage(this.product.id);
+            const img = main.porductMain.getImage(this.product.id, main.porductMain.thumbnails);
             if (img) {
                 this.container.appendChild(img);
             }

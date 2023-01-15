@@ -6,11 +6,11 @@ export class Router {
         window.addEventListener("popstate", this.locHandling);
     }
 
-    route(url: string) {
+    public route(url: string) {
         window.history.pushState({}, "", `${url}`);
     }
 
-    locHandling() {
+    public locHandling() {
         if (!main) return;
         const path = window.location.href.split("/");
         if (path[path.length - 1].includes("cart")) {

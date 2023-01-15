@@ -1,4 +1,4 @@
-export class ProductListSettings {
+export default class ProductListSettings {
     container: HTMLElement;
 
     searchCount: HTMLLabelElement;

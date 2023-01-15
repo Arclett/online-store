@@ -3,7 +3,7 @@ import { CartParams } from "../../types/_enums";
 import { ICartParams, IProduct } from "../../types/_interfaces";
 import { CartList } from "./_CartList";
 import { ProductCart } from "../ProductPage/_ProductCart";
-import { CartPagination } from "./_CartPagination";
+import CartPagination from "./_CartPagination";
 import { CartSum } from "./_CartSum";
 import { BuyWindow } from "../Buy/_BuyWindow";
 

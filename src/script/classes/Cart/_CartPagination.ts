@@ -1,6 +1,6 @@
 import { ICartParams, IProduct } from "../../types/_interfaces";
 
-export class CartPagination {
+export default class CartPagination {
     getPage(params: ICartParams, currentCart: IProduct[]) {
         const data: IProduct[] = this.getCartSet(currentCart);
         const res: IProduct[][] = [];
