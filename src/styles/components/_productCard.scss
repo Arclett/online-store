@@ -1,0 +1,81 @@
+.product {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    .thumbnail {
+        object-fit: cover;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .product-info {
+        background-color: rgba(0, 0, 0, 0.84);
+        color: white;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 5px;
+        grid-row-gap: 5px;
+        div {
+            @include toCenter;
+        }
+        .product-title {
+            font-size: 15px;
+            grid-column: span 2;
+        }
+        .infoButton,
+        .add-to-cart {
+            width: 70%;
+            grid-column: span 2;
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+            font-size: 15px;
+            margin: 0 auto;
+        }
+    }
+}
+
+.view-list {
+    flex-direction: row;
+    .product-info {
+        height: 95%;
+        width: 70%;
+        padding: 10px;
+        @include inputBox;
+    }
+    .thumbnail {
+        height: 300px;
+        width: 600px;
+    }
+}
+
+.view-thumb {
+    flex-direction: column;
+    height: 400px;
+    width: 250px;
+    margin: 10px 10px;
+    border-radius: 5px;
+    @include inputBox;
+    .thumbnail {
+        height: 200px;
+    }
+    .product-info {
+        padding: 5px;
+        height: 200px;
+        width: 100%;
+        div {
+            text-align: center;
+        }
+    }
+}
+
+.view-list,
+.view-thumb {
+    button {
+        &:hover {
+            @include onHover;
+        }
+    }
+}

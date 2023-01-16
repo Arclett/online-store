@@ -1,0 +1,23 @@
+@mixin toCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin inputBox {
+    border: 1.5px solid $grey;
+    border-radius: 7px;
+    box-shadow: 3px 3px 3px $grey;
+}
+
+@mixin centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin onHover {
+    transition: 0.3s;
+    transform: scale(1.1);
+    cursor: pointer;
+}

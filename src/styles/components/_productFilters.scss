@@ -1,0 +1,28 @@
+.filters {
+    grid-row: span 2;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 30px;
+
+    .check-filter {
+        height: 30vh;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 20px;
+        @include inputBox;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}

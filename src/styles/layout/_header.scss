@@ -1,0 +1,36 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    background-color: black;
+    align-items: center;
+    padding: 10px 20px;
+    width: 95%;
+    .main-title {
+        margin: 0;
+        &:hover {
+            @include onHover;
+        }
+    }
+    .header__cart-wrapper {
+        width: 30%;
+        min-width: 400px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        align-items: center;
+        font-size: 18px;
+        .cart-logo {
+            width: 50px;
+            height: 50px;
+            &:hover {
+                @include onHover;
+            }
+        }
+        div {
+            &:hover {
+                @include onHover;
+            }
+        }
+    }
+}

@@ -1,0 +1,67 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 6;
+    background-color: rgba(0, 0, 0, 0.614);
+}
+
+.buy-window-wrapper {
+    position: fixed;
+    width: 40%;
+    left: 30%;
+    top: 30%;
+    z-index: 10;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    .buy-window-details {
+        @include centered;
+        margin: 0;
+        padding: 0;
+    }
+    .card-details-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        legend {
+            font-size: 20px;
+        }
+        .ccn-logo {
+            width: 10%;
+            background-color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+        }
+        .ccn-input {
+            width: 90%;
+        }
+    }
+}
+
+.success {
+    height: 100px;
+    width: 300px;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    @include centered;
+    font-size: 30px;
+}
+
+.valid {
+    border: 1px solid green;
+    color: green;
+}
+
+.invalid {
+    border: 1px solid red;
+    color: red;
+}

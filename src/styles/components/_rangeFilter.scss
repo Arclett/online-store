@@ -1,0 +1,49 @@
+.range-container {
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+
+    input::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        pointer-events: all;
+        width: 24px;
+        height: 24px;
+        position: relative;
+        z-index: 3;
+        background-color: rgb(87, 85, 85);
+        border-radius: 50%;
+        box-shadow: 0 0 0 1px #c6c6c6;
+        cursor: pointer;
+        &:hover {
+            @include onHover;
+        }
+    }
+    input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 4px;
+        background-color: #c6c6c6;
+        pointer-events: none;
+        width: 80%;
+    }
+    .range-min {
+        position: relative;
+        top: 8px;
+    }
+
+    .range-min,
+    .range-max {
+        margin: 0 auto;
+    }
+}
+
+.range-label-wrapper {
+    @include inputBox;
+    height: 30px;
+    padding: 0 10px;
+    align-items: center;
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
